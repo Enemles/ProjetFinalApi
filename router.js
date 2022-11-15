@@ -1,7 +1,7 @@
 // imports
 let express = require('express');
-let userCtrl = require('./routes/userCtrl');
-let reviewCtrl = require('./routes/reviewCtrl');
+let userCtrl = require('./controller/userCtrl');
+let reviewCtrl = require('./controller/reviewCtrl');
 
 // router
 exports.router = (function () {
