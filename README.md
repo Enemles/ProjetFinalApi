@@ -11,11 +11,9 @@
 
 <h2 align="right">YourOwnCinematicReview API</h2>
 
-<hr> -->
-
 <p align="center">
-  <a href="#dart-equipe">Équipe</a> &#xa0; | &#xa0; 
-  <a href="#sparkles-projet">Project</a> &#xa0; | &#xa0;
+  <a href="#dart-equipe">Equipe</a> &#xa0; | &#xa0; 
+  <a href="#sparkles-projet">Projet</a> &#xa0; | &#xa0;
   <a href="#rocket-technologies">Techno</a> &#xa0; | &#xa0;
   <a href="#checkered_flag-starting">Start</a> &#xa0; | &#xa0;
 </p>
@@ -32,8 +30,8 @@
 
 ## :sparkles: Projet ##
 
-:heavy_check_mark: Publier un avis sur un film avec une note et un commentaire;\
-:heavy_check_mark: Pouvoir like ou dislike les avis des autres utilisateurs;\
+:heavy_check_mark: Publier un avis sur un film avec une note et un commentaire
+:heavy_check_mark: Pouvoir like ou dislike les avis des autres utilisateurs
 
 ## :rocket: Techno ##
 
