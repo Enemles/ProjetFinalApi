@@ -1,4 +1,4 @@
-const Book = require('./book.model');
+const Book = require("..models/book");
 
 exports.getBooks = function getBooks() {
   return Book.findAll();

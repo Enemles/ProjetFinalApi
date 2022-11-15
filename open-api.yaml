@@ -1,11 +1,11 @@
 openapi: 3.0.3
 info:
-  title: GetBooks reviews or users
+  title: Reviews for movies
   description: |-
-    This is a sample to return books reviews or users from a library
+    This is a sample to create, as a user reviews for movies
   termsOfService: NaN
   contact:
-    email: apiteam@swagger.io
+    email: ynov@ynov.com
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -13,18 +13,64 @@ info:
 servers:
   - url: http://localhost:3000/
 tags:
-  - name: books
-    description: Interact with books
-  - name: meteo
-    description: Interact with meteo
+  - name: Register
+    description: Sign up as a new user
+  - name: Login
+    description: Log in as a user
+  - name : Me
+    description: User interface
+  - name : Reviews
+    description: User reviews
 paths:
-  /books:
+  /register:
+    post:
+      tags:
+        - Register
+      summary: Register as a new user
+      description: Register as a new user
+      operationId: addUser
+      requestBody:
+        description: Register as a new user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /login:
+    post:
+      tags:
+        - Login
+      summary: Register as a new user
+      description: Register as a new user
+      operationId: addUser
+      requestBody:
+        description: Register as a new user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /me/reviews:
     get:
       tags:
-        - books
-      summary: Find all my books
-      description: Returns all the books
-      operationId: getBooks
+        - Me
+      summary: Find all my reviews
+      description: Returns all the reviews belonging to this user
+      operationId: getAllReviews
       responses:
         '200':
           description: successful operation
@@ -33,118 +79,73 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Book'
+                  $ref: '#/components/schemas/Review'
                 example:
-                  - id: 1
-                    title: Sherlock Holmes
-                    date: 2020-05-12
-                  - id: 2
-                    title: Jumanji
-                    date: 2020-05-12
-                  - id: 2
-                    title: Attaque de boulettes géantes
-                    date: 2020-05-12
+                  - reviewId: 1
+                    movieTitle: Sherlock Holmes
+                    rating: 2
+                    description: Description
+                  - reviewId: 2
+                    movieTitle: Jumanji
+                    rating: 5
+                    description: non
+                  - reviewId: 3
+                    movieTitle: Star Wars
+                    rating: 0
+                    description: obligatoire
         '400':
           description: unsuccessful operation an error occurred
     post:
-      tags:
-        - books
-      summary: Add a new book to the lib
-      description: Add a new book to the lib
-      operationId: addBook
-      requestBody:
-        description: Create a new book in the lib
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Book'
-        required: true
-      responses:
-        '201':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Book'          
-  /books/{bookId}:
+       tags:
+        - Me
+  /me/reviews/{reviewId}: 
     get:
       tags:
-        - books
-      summary: Find book by ID
-      description: Returns a single book
-      operationId: getBookById
-      parameters:
-        - name: bookId
-          in: path
-          description: ID of book to return
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Book'          
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: Book not found
+        - Me
     delete:
-        tags:
-          - books
-        summary: Deletes a book
-        description: delete a book
-        operationId: deleteBookById
-        parameters:
-          - name: bookId
-            in: path
-            description: Book id to delete
-            required: true
-            schema:
-              type: integer
-              format: int64
-        responses:
-          '200':
-            description: Livre bien supprimé
-          '400':
-            description: Invalid Book value
-  /meteo:
-    get:
       tags:
-        - meteo
-      description: Returns external api
-      responses:
-        '200':
-          description: successful operation
-        '400':
-          description: unsuccessful operation an error occurred
+        - Me
+    put:
+      tags:
+        - Me
+  /reviews/{userId}:
+    get:
+  /reviews/{reviewId}/like:
+    post:
+  /reviews/{reviewId}/dislike:
+    post:
+
 components:
   schemas:
-    Book:
+    User:
       required:
-        - id
-        - title
-        - date
+        - userId
       type: object
       properties:
-        id:
+        userId:
+          type: string
+          example: "Jason"
+    UserRegister:
+      allOf:
+        - $ref: '#/components/schemas/User'
+      required:
+        - email
+        - password
+    Review:
+      required:
+        - reviewId
+        - movieTitle
+        - rating
+      properties:
+        reviewId:
+          type: string
+          example: Jason4
+        movieTitle:
+          type: string
+          example: Star wars
+        rating:
           type: integer
-          format: int64
-          example: 5
-        title:
+        description:
           type: string
-          example: Cars
-        date:
-          type: string
-          format: date
-          example: 2020-05-12
-  requestBodies:
-    Book:
-      description: Book object that needs to be added to the lib
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Book'
+          example: Une description incroyable ehh nan c jason
+
