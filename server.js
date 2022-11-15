@@ -1,12 +1,13 @@
 const app = require('./app.js');
-const { sequelize } = require('./database.model');
+const db = require('./models/index');
+const { sequelize } = require('./db.config');
 
-sequelize
+db.instance
   .sync({ force: false })
   .then(() => {
     console.log('Connection has been established successfully.');
     app.listen(3000, () => {
-      console.log('My server running at http://127.0.0.1');
+      console.log('My server running at http://localhost:3000');
     });
   })
   .catch((error) => {
