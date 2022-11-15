@@ -9,7 +9,7 @@
 
 <!-- Status -->
 
-<h2 align="right">YourOwnCinematicReview API</h2>
+<h2 align="center">YourOwnCinematicReview API</h2>
 
 <p align="center">
   <a href="#dart-equipe">Equipe</a> &#xa0; | &#xa0; 
@@ -30,8 +30,8 @@
 
 ## :sparkles: Projet ##
 
-:heavy_check_mark: Publier un avis sur un film avec une note et un commentaire
-:heavy_check_mark: Pouvoir like ou dislike les avis des autres utilisateurs
+:heavy_check_mark: Publier un avis sur un film avec une note et un commentaire;\
+:heavy_check_mark: Pouvoir like ou dislike les avis d'autres utilisateurs;
 
 ## :rocket: Techno ##
 
