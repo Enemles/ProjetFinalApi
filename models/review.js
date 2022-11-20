@@ -5,7 +5,7 @@ module.exports = (instance) => {
     "review",
     {
       reviewId: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoincrement: true,
       },
@@ -13,14 +13,14 @@ module.exports = (instance) => {
         type: DataTypes.STRING,
       },
       note: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       commentaire: {
         type: DataTypes.STRING,
       },
       like: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
       },
       movieName: {
         type: DataTypes.STRING,

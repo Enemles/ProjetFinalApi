@@ -5,7 +5,7 @@ module.exports = (instance) => {
     "role",
     {
       roleId: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
       },
       roleName: {

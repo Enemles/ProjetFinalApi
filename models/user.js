@@ -23,7 +23,7 @@ module.exports = (instance) => {
         type: DataTypes.STRING,
       },
       roleId: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
       },
       reviews: {
         type: DataTypes.ARRAY(STRING),
