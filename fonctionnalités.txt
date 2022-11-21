@@ -20,7 +20,7 @@ Fichier contenant toutes les fonctionnalités de l'API:
             - Dislike une review
             - Ajouter une review
             - Consulter tous les films existants dans la base 
-            -   
+
             - Consulter toutes les reviews d'un film (modification du modèle) -> affichage de données moyennes du film
 
 
