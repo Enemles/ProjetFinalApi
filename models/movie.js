@@ -9,7 +9,7 @@ module.exports = (instance) => {
         primaryKey: true,
       },
       releaseDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
       },
       globalRating: {
         type: DataTypes.INTEGER,

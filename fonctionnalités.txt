@@ -1,0 +1,26 @@
+Fichier contenant toutes les fonctionnalités de l'API: 
+
+
+    Implémentées: 
+
+
+
+
+
+    Pas implémentées: 
+
+        Validées: 
+
+
+
+        En attente de validation: 
+            - Consulter tous les users
+            - Rechercher un user -> consulter ses reviews
+            - Like une review
+            - Dislike une review
+            - Ajouter une review
+            - Consulter tous les films existants dans la base 
+
+            - Consulter toutes les reviews d'un film (modification du modèle) -> affichage de données moyennes du film
+
+
