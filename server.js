@@ -3,7 +3,7 @@ const db = require('./models/index');
 const { sequelize } = require('./db.config');
 
 db.instance
-  .sync({ force: false })
+  .sync({ force: true })
   .then(() => {
     console.log('Connection has been established successfully.');
     app.listen(3000, () => {

@@ -1,8 +1,8 @@
-const DataTypes = require("sequelize");
+const DataTypes = require('sequelize');
 
 module.exports = (instance) => {
   return instance.define(
-    "movie",
+    'movie',
     {
       movieName: {
         type: DataTypes.STRING,
@@ -12,7 +12,7 @@ module.exports = (instance) => {
         type: DataTypes.DATE,
       },
       globalRating: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
       },
     },
     {
