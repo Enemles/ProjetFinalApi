@@ -11,6 +11,5 @@ router.get("/:id/:reviewId", userCtrl.getReviewOnUserById);
 
 router.post("/:id/:reviewId/like", userCtrl.likeAReview);
 router.post("/:id/:reviewId/dislike", userCtrl.dislikeAReview);
-router.post("/:id", userCtrl.addReviewOnUser);
 
-module.exports = router;
+module.exports = rou;
