@@ -1,8 +1,8 @@
-const { DataTypes, STRING } = require("sequelize");
+const { DataTypes } = require('sequelize');
 
 module.exports = (instance) => {
   return instance.define(
-    "user",
+    'user',
     {
       id: {
         type: DataTypes.STRING,
@@ -25,8 +25,14 @@ module.exports = (instance) => {
       roleId: {
         type: DataTypes.INTEGER,
       },
-      reviews: {
-        type: DataTypes.ARRAY(STRING),
+      reviewId: {
+        type: DataTypes.INTEGER,
+        get() {
+          return this.getDataValue('id').split(';');
+        },
+        set(val) {
+          this.setDataValue('id', val.join(';'));
+        },
       },
     },
     {
