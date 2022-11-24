@@ -13,14 +13,12 @@ info:
 servers:
   - url: http://localhost:3000/
 tags:
-  - name: Register
-    description: Sign up as a new user
-  - name: Login
-    description: Log in as a user
+  - name: User
+    description: User Interface
+  - name: Movies
+    description: Movie Interface
   - name : Me
-    description: User interface
-  - name : Review
-    description: User reviews
+    description: Logged User interface
 paths:
   /register:
     post:
@@ -64,6 +62,140 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+  /users:
+    get:
+      tags:
+        - User
+      summary: Find all users
+      description: Returns all the users
+      operationId: getUsers
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserGet'
+                example:
+                  - userId: 1
+                    email: email@gmail.com
+                    firstName: 'John'
+                    lastName: 'Doe'
+                  - userId: 2
+                    email: email@hotmail.com
+                    firstName: 'Jane'
+                    lastName: 'Doe'
+                  - userId: 3
+                    email: email@outlook.com
+                    firstName: 'Jack'
+                    lastName: 'Doe'
+        '400':
+          description: unsuccessful operation an error occurred
+  /users/{userId}:
+    get:
+      tags:
+        - User
+      summary: Find a user by id
+      description: Returns a user by it's ID
+      operationId: getUserById
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserGet'
+                example:
+                  - userId: 1
+                    email: email@gmail.com
+                    firstName: 'John'
+                    lastName: 'Doe'
+        '400':
+          description: unsuccessful operation an error occurred
+  /users/{userId}/{reviewId}:
+    get:
+      tags:
+        - User
+      summary: Find a user by id of it's user
+      description: Returns a review by id of it's user
+      operationId: getReviewOnUserById
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReviewGet'
+                example:
+                  - userId: 1
+                    email: email@gmail.com
+                    firstName: 'John'
+                    lastName: 'Doe'
+        '400':
+          description: unsuccessful operation an error occurred
+  /users/{userId}/reviews:
+    get:
+      tags:
+        - User
+      summary: Find all the reviews belonging to userId
+      description: Returns all the reviews belonging to userId
+      operationId: getReviewsByUserId
+      parameters:
+        - name: userId
+          in: path
+          description: ID of user to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewGet'
+              example:
+                - reviewId: 2
+                  movieTitle: Jumanji
+                  rating: 5
+                  description: non
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Review not found
+  /users/{userId}/{reviewId}/like:
+    post:
+      tags: 
+        - Review
+      summary: Add a like to a review
+      operationId: likeAReview
+      responses:
+        "2XX":
+          description: "Review liked"
+        "4XX": 
+          $ref: "#/components/responses/NotFound"
+        "5XX": 
+          $ref: "#/components/responses/InternalServerError"   
+  /users/{userId}/{reviewId}/dislike:
+    post:
+      tags: 
+        - Review
+      summary: Add a dislike to a review
+      operationId: dislikeAReview
+      responses:
+        "2XX":
+          description: "Review liked"
+        "4XX": 
+          $ref: "#/components/responses/NotFound"
+        "5XX": 
+          $ref: "#/components/responses/InternalServerError"   
   /me/reviews:
     get:
       tags:
@@ -143,7 +275,6 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Review not found
-
     delete:
         tags:
           - Me
@@ -189,65 +320,95 @@ paths:
           description: Review not found
         '405':
           description: Validation exception
-  /reviews/{userId}:
+  /movies:
     get:
       tags:
-        - Review
-      summary: Find all the reviews belonging to userId
-      description: Returns all the reviews belonging to userId
-      operationId: getReviewsByUserId
-      parameters:
-        - name: userId
-          in: path
-          description: ID of user to return
-          required: true
-          schema:
-            type: integer
-            format: int64
+        - Movies
+      summary: Find all movies available
+      description: Returns all the movies
+      operationId: getMovies
       responses:
         '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReviewGet'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movies'
+                example:
+                  - movieName: Star wars
+                    releaseDate: 12-12-2012
+                    globalRating: 4
+                  - movieName: Star wars 2
+                    releaseDate: 12-12-2012
+                    globalRating: 2
+                  - movieName: Star wars 3
+                    releaseDate: 12-12-2012
+                    globalRating: 5
         '400':
-          description: Invalid ID supplied
-        '404':
-          description: Review not found
-  /reviews/{reviewId}/like:
-    post:
-      tags: 
-        - Review
-      summary: Add a like to a review
-      operationId: addLike
+          description: unsuccessful operation an error occurred
+  /movies/{movieId}:
+    get:
+      tags:
+        - Movies
+      summary: Find movie by id
+      description: Returns single movie by id
+      operationId: getMovieById
       responses:
-        "2XX":
-          description: "Review liked"
-        "4XX": 
-          $ref: "#/components/responses/NotFound"
-        "5XX": 
-          $ref: "#/components/responses/InternalServerError"
-        
-  # /reviews/{reviewId}/dislike:
-  #   post:
-
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movies'
+                example:
+                  - movieName: Star wars
+                    releaseDate: 12-12-2012
+                    globalRating: 4
+        '400':
+          description: unsuccessful operation an error occurred
 components:
   schemas:
+    Movies:
+      required:
+        - movieName
+        - releaseDate
+        - globalRating
+      properties:
+        movieName:
+          type: string
+          example: Star wars
+        releaseDate:
+          type: string
+          format: date
+          example: 12-12-2012
+        globalRating:
+          type: integer
+          example: 5
     User:
       required:
         - userId
       type: object
       properties:
         userId:
-          type: string
-          example: "Jason"
+          type: integer
+          example: 1
     UserRegister:
       allOf:
         - $ref: '#/components/schemas/User'
       required:
         - email
-        - password
+        - reviews
+    UserGet:
+      allOf:
+        - $ref: '#/components/schemas/User'
+      required:
+        - email
+        - firstName
+        - lastName
     ReviewGet:
       allOf:
         - properties:
@@ -267,6 +428,7 @@ components:
           example: Star wars
         rating:
           type: integer
+          example: 5
         description:
           type: string
           example: Une description incroyable ehh nan c jason
