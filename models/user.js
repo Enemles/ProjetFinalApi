@@ -4,7 +4,7 @@ module.exports = (instance) => {
   return instance.define(
     "user",
     {
-      id: {
+      userId: {
         type: DataTypes.STRING,
         primaryKey: true,
       },
