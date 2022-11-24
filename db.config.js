@@ -1,6 +1,8 @@
 module.exports = {
-  hostname: "localhost",
-  username: "root",
-  password: "",
-  database: "ynov",
+  dialect: 'mysql2',
+  hostname: 'localhost',
+  port: 3306,
+  username: 'root',
+  password: 'azertyuiop',
+  database: 'ynov',
 };
