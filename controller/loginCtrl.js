@@ -3,29 +3,50 @@ const models = require("../models");
 
 // routes
 module.exports = {
-  register: function (req, res) {
-    let email = req.body.email;
-    let username = req.body.username;
-    let password = req.body.password;
+  register: async function (req, res) {
+    try {
+    const { userName, email, firstName, lastName, password } = req.body;
 
-    if (email == null || username == null || password == null) {
-      return res.status(400).json({ error: "missing parameters" });
+    if (!(userName && email && password && firstName && lastName)) {
+      res.status(400).send("All input is required");
+    }
+    const oldUser = await models.user.findOne({ userName });
+
+    if (oldUser) {
+      return res.status(409).send("User Already Exist. Please Login");
     }
 
-    models.user
-      .findOne({
-        attributes: ["email"],
-        where: { email: email },
-      })
-      .then()
-      .then()
-      .catch();
+    encryptedPassword = await bcrypt.hash(password, 10);
+
+    const user = await models.user.create({
+      firstName,
+      lastName,
+      email: email.toLowerCase(),
+      password: encryptedPassword,
+    });
+
+    // Create token
+    const token = jwt.sign(
+      { user_id: user._id, email },
+      process.env.TOKEN_KEY,
+      {
+        expiresIn: "2h",
+      }
+    );
+    // save user token
+    user.token = token;
+
+    // return new user
+    res.status(201).json(user);
+    } catch (err) {
+      console.log(err);
+    }
   },
   login: function (req, res) {
-    let username = req.body.username;
+    let userName = req.body.userName;
     let password = req.body.password;
 
-    if (username == null || password == null) {
+    if (userName == null || password == null) {
       return res.status(400).json({ error: "missing parameters" });
     }
 
@@ -33,7 +54,6 @@ module.exports = {
       .findOne({
         where: { email: email },
       })
-      .then()
       .then()
       .catch();
   },
