@@ -11,7 +11,7 @@ module.exports = (instance) => {
       token: {
         type: DataTypes.STRING,
       },
-      mail: {
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -31,6 +31,7 @@ module.exports = (instance) => {
         type: DataTypes.INTEGER,
       },
       reviewId: {
+        allowNull: true,
         type: DataTypes.INTEGER,
         get() {
           return this.getDataValue('id').split(';');

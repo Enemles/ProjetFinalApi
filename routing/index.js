@@ -7,10 +7,10 @@ const movieRouter = require("./movieRouter");
 
 
 //l'authentification se passe au get('/')
-router.get('/', authenticationRouter)
+router.use('/login', authenticationRouter)
 
-router.get("/users", userRouter);
+// router.use("/users", userRouter);
 
-router.get("/movies", movieRouter);
+// router.use("/movies", movieRouter);
 
 module.exports = router;

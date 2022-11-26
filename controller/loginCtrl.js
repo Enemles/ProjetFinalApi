@@ -1,33 +1,42 @@
 // imports
 const models = require("../models");
 
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 // routes
 module.exports = {
   register: async function (req, res) {
     try {
-    const { userName, email, firstName, lastName, password } = req.body;
+    const { username, email, firstname, lastname, password } = req.body;
 
-    if (!(userName && email && password && firstName && lastName)) {
+    if (!(username && email && password && firstname && lastname)) {
       res.status(400).send("All input is required");
     }
-    const oldUser = await models.user.findOne({ userName });
+    // const oldUser = await models.user.findOne({ username });
 
-    if (oldUser) {
-      return res.status(409).send("User Already Exist. Please Login");
-    }
+    // if (oldUser) {
+    //   return res.status(409).send("User Already Exist. Please Login");
+    // }
+
+    console.log(username);
 
     encryptedPassword = await bcrypt.hash(password, 10);
 
     const user = await models.user.create({
-      firstName,
-      lastName,
+      username,
+      firstname,
+      lastname,
       email: email.toLowerCase(),
       password: encryptedPassword,
     });
 
     // Create token
     const token = jwt.sign(
-      { user_id: user.userName, email },
+      { username: user.username, email },
       `${process.env.SECRET}`,
       {
         expiresIn: "2h",
@@ -45,20 +54,20 @@ module.exports = {
   login: async function (req, res) {
     try {
       // Get user input
-      const { userName, password } = req.body;
+      const { username, password } = req.body;
   
       // Validate user input
-      if (!(userName && password)) {
+      if (!(username && password)) {
         res.status(400).send("All input is required");
       }
       // Validate if user exist in our database
-      const user = await models.user.findOne({ email });
+      const user = await models.user.findOne({ username });
   
       if (user && (await bcrypt.compare(password, user.password))) {
         // Create token
         const token = jwt.sign(
-          { user_id: user.userName, email },
-          process.env.TOKEN_KEY,
+          { username: user.username },
+          `${process.env.SECRET}`,
           {
             expiresIn: "2h",
           }

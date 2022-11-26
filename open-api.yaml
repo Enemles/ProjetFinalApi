@@ -20,12 +20,10 @@ tags:
   - name: Review
     description: User reviews
 paths:
-  /register:
+  /login/register:
     post:
       tags:
         - Authentication
-      security:
-        - bearerAuth: []
       summary: Register as a new user
       operationId: register
       requestBody:
@@ -47,8 +45,6 @@ paths:
     post:
       tags:
         - Authentication
-      security:
-        - bearerAuth: []
       summary: Login as a new user
       description: Login as a new user
       operationId: login
@@ -267,16 +263,16 @@ components:
   schemas:
     User:
       required:
-        - userName
-        - mail
+        - username
+        - email
         - firstname
         - lastname
       type: object
       properties:
-        userName:
+        username:
           type: string
           example: JasonDerulo98
-        mail:
+        email:
           type: string
           example: jasonderulo@gmail.com
         firstname:
@@ -297,11 +293,11 @@ components:
           example: jasonLeGazon
     UserLogin:
       required:
-        - userName
+        - username
         - password
       type: object
       properties:
-        userName:
+        username:
           type: string
           example: JasonDerulo98
         password:
