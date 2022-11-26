@@ -23,7 +23,7 @@ paths:
   /register:
     post:
       tags:
-        - Register
+        - Authentication
       summary: Register as a new user
       description: Register as a new user
       operationId: addUser
@@ -32,28 +32,33 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserRegister'
+            example:
+              - userId: Jeff64
+                firstName: John
+                lastName: John
+                email: email@outlook.com
+                password: MotDePasse 
         required: true
       responses:
         '201':
           description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
   /login:
     post:
       tags:
-        - Login
-      summary: Register as a new user
-      description: Register as a new user
+        - Authentication
+      summary: Login as a user
+      description: login as a user
       operationId: addUser
       requestBody:
-        description: Register as a new user
+        description: Login as a user
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserLogin'
+            example:
+              - userId: Jeff64
+                password: MotDePasse 
         required: true
       responses:
         '201':
@@ -63,6 +68,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
   /users:
+    get:
+      tags:
+        - User
+      summary: Find my informations
+      description: Returns my informations
+      operationId: getMe
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserGet'
+                example:
+                  - userId: Jack31
+                    email: email@outlook.com
+                    firstName: 'Jack'
+                    lastName: 'Doe'
+        '400':
+          description: unsuccessful operation an error occurred
+  /users/all:
     get:
       tags:
         - User
@@ -394,14 +422,29 @@ components:
       type: object
       properties:
         userId:
-          type: integer
-          example: 1
+          type: string
+          example: YannouJr
     UserRegister:
       allOf:
         - $ref: '#/components/schemas/User'
       required:
+        - firstName
+        - lastName
         - email
-        - reviews
+        - password
+      properties:
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+        email:
+          type: string
+          example: johnDoe@gmail.com
+        password:
+          type: string
+          example: MotDePasse
     UserGet:
       allOf:
         - $ref: '#/components/schemas/User'

@@ -1,6 +1,7 @@
 const express = require("express");
 router = express.Router();
 const userRouter = require("./userRouter");
+const movieRouter = require("./movieRouter");
 
 //l'authentification se passe au get('/')
 router.get("/users", userRouter);
