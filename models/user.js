@@ -8,6 +8,9 @@ module.exports = (instance) => {
         type: DataTypes.STRING,
         primaryKey: true,
       },
+      token: {
+        type: DataTypes.STRING,
+      },
       mail: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -18,9 +21,11 @@ module.exports = (instance) => {
       },
       firstname: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       lastname: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       roleId: {
         type: DataTypes.INTEGER,
