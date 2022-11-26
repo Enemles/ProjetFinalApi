@@ -1,14 +1,22 @@
 // Imports
 const express = require('express');
-const router = require('./router').router;
+const OpenApiValidator = require('express-openapi-validator');
+
 
 // Instantiate server
 const app = express();
 
 // Body Parser configuration
-router.use(express.json());
-router.use(express.text());
-router.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.text());
+app.use(express.urlencoded({ extended: false }));
+
+// app.use(
+//   OpenApiValidator.middleware({
+//     apiSpec: './open-api.yaml',
+//     validateRequests: true,
+//   })
+// );
 
 // Configure routes
 app.get('/', function (req, res) {
@@ -16,7 +24,7 @@ app.get('/', function (req, res) {
 });
 
 // Error config
-router.use((error, req, res, next) => {
+app.use((error, req, res, next) => {
   res
     .status(error.status || 500)
     .json({ success: false, message: error.message, errors: error.errors });

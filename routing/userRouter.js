@@ -2,7 +2,9 @@ const express = require("express");
 const userCtrl = require("../controller/userCtrl");
 router = express.Router();
 
-router.get("/", userCtrl.getUsers);
+router.get("/", function(req, res) {
+    res.status(200).send('<h1>Nous rompishâmes</h1>');
+})
 router.get("/:userId", userCtrl.getUserById);
 router.get("/:userId/:reviewId", userCtrl.getReviewOnUserById);
 
