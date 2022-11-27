@@ -19,13 +19,10 @@ module.exports = {
   role: require('./role')(instance),
 };
 
+
 instance.models.user.belongsTo(instance.models.role, {
   as: 'role',
   foreignKey: 'roleId',
-});
-instance.models.user.belongsTo(instance.models.review, {
-  as: 'review',
-  foreignKey: 'reviewId',
 });
 instance.models.review.belongsTo(instance.models.movie, {
   as: 'movie',

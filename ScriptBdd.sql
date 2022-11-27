@@ -14,10 +14,10 @@ INSERT INTO `ynov`.`movies` (`moviename`, `releasedate`, `globalrating`) VALUES 
 
 -- Table User
 
-adminpass
-visitorpass
-userpass
-user2pass
+--adminpass
+--visitorpass
+--userpass
+--user2pass
 
 INSERT INTO `ynov`.`users` (`username`, `email`, `password`, `firstname`, `lastname`, `roleId`) VALUES ('admin', 'admin@gmail.com', '$2b$10$JA40mD35HAB2zTZD.Dvle.6FTGuehSGXd7IYwhINt3PdWe7dbmWcy', 'admin', 'admin', '1');
 INSERT INTO `ynov`.`users` (`username`, `email`, `password`, `firstname`, `lastname`, `roleId`) VALUES ('visitor', 'visitor@gmail.com', '$2b$10$QIDYApEgl8RjlWN.FOgXJeB5T9oPJXyUG5AVOJAEzWFkNWXIX/l6i', 'visitor', 'visitor', '3');
