@@ -10,6 +10,9 @@ module.exports = (instance) => {
         primaryKey: true,
         autoincrement: true,
       },
+      username: {
+        type: DataTypes.STRING,
+      },
       title: {
         type: DataTypes.STRING,
       },

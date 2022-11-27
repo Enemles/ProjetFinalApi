@@ -8,9 +8,6 @@ module.exports = (instance) => {
         type: DataTypes.STRING,
         primaryKey: true,
       },
-      token: {
-        type: DataTypes.STRING,
-      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -29,22 +26,11 @@ module.exports = (instance) => {
       },
       roleId: {
         type: DataTypes.INTEGER,
-      },
-      reviewId: {
-        allowNull: true,
-        type: DataTypes.INTEGER,
-        get() {
-          if (this.getDataValue('reviewId')) {
-            return this.getDataValue('reviewId').split(';');
-          }
-        },
-        set(val) {
-          this.setDataValue('reviewId', val.join(';'));
-        },
-      },
+      }
     },
     {
       timestamps: false,
     }
+    
   );
 };

@@ -4,14 +4,14 @@ module.exports = (instance) => {
   return instance.define(
     'movie',
     {
-      movieName: {
+      moviename: {
         type: DataTypes.STRING,
         primaryKey: true,
       },
-      releaseDate: {
+      releasedate: {
         type: DataTypes.DATEONLY,
       },
-      globalRating: {
+      globalrating: {
         type: DataTypes.INTEGER,
       },
     },
