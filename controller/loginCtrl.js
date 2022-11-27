@@ -16,11 +16,11 @@ module.exports = {
     if (!(username && email && password && firstname && lastname)) {
       res.status(400).send("All input is required");
     }
-    // const oldUser = await models.user.findOne({ username });
+    const oldUser = await models.user.findOne({ where: { username: username } });
 
-    // if (oldUser) {
-    //   return res.status(409).send("User Already Exist. Please Login");
-    // }
+    if (oldUser) {
+      return res.status(409).send("User Already Exist. Please Login");
+    }
 
     console.log(username);
 
@@ -33,17 +33,6 @@ module.exports = {
       email: email.toLowerCase(),
       password: encryptedPassword,
     });
-
-    // Create token
-    const token = jwt.sign(
-      { username: user.username, email },
-      `${process.env.SECRET}`,
-      {
-        expiresIn: "2h",
-      }
-    );
-    // save user token
-    user.token = token;
 
     // return new user
     res.status(201).json(user);
