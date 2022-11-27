@@ -87,19 +87,19 @@ paths:
                 example:
                   - reviewId: 1
                     reviewTitle: Big brain
-                    movieName: Sherlock Holmes
+                    moviename: Sherlock Holmes
                     rating: 2
                     comment: Le gars va trop vite, bonne réalisation
                     like: 9
                   - reviewId: 2
                     reviewTitle: The rock en feu
-                    movieName: Jumanji
+                    moviename: Jumanji
                     rating: 5
                     comment: Gros film pour les enfants
                     like: 3
                   - reviewId: 3
                     reviewTitle: Princesse leïa RIP mais le boulot...
-                    movieName: Star Wars
+                    moviename: Star Wars
                     rating: 10
                     comment: ça tire dans tous les sens
                     like: 4
@@ -368,7 +368,7 @@ components:
     Review:
       required:
         - reviewTitle
-        - movieName
+        - moviename
         - rating
         - comment
         - like
@@ -376,7 +376,7 @@ components:
         reviewTitle:
           type: string
           example: I *** loved this shit
-        movieName:
+        moviename:
           type: string
           example: Star wars
         rating:
@@ -389,11 +389,11 @@ components:
           example: 5
     Movies:
       required:
-        - movieName
+        - moviename
         - releaseDate
         - internetNote
       properties:
-        movieName:
+        moviename:
           type: string
           example: Pulp Fiction
         releaseDate:

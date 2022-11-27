@@ -29,5 +29,5 @@ instance.models.user.belongsTo(instance.models.review, {
 });
 instance.models.review.belongsTo(instance.models.movie, {
   as: 'movie',
-  foreignKey: 'movieName',
+  foreignKey: 'moviename',
 });
