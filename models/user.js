@@ -34,10 +34,12 @@ module.exports = (instance) => {
         allowNull: true,
         type: DataTypes.INTEGER,
         get() {
-          return this.getDataValue('id').split(';');
+          if (this.getDataValue('reviewId')) {
+            return this.getDataValue('reviewId').split(';');
+          }
         },
         set(val) {
-          this.setDataValue('id', val.join(';'));
+          this.setDataValue('reviewId', val.join(';'));
         },
       },
     },

@@ -61,7 +61,7 @@ module.exports = {
         res.status(400).send("All input is required");
       }
       // Validate if user exist in our database
-      const user = await models.user.findOne({ username });
+      const user = await models.user.findOne({ where: { username: username },});
   
       if (user && (await bcrypt.compare(password, user.password))) {
         // Create token
