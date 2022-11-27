@@ -8,7 +8,7 @@ module.exports = (instance) => {
         type: DataTypes.INTEGER,
         primaryKey: true,
       },
-      roleName: {
+      rolename: {
         type: DataTypes.STRING,
         allowNull: false,
       },
