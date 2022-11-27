@@ -79,6 +79,8 @@ paths:
           content:
             application/json:
               schema:
+                oneOf:
+                  - $ref: "#/components/schemas/User"
                 type: array
                 items:
                   $ref: "#/components/schemas/ReviewGet"
@@ -109,7 +111,6 @@ paths:
       security:
         - bearerAuth: []
       summary: Add a new review to a movie
-      description: Add a new review to a movie
       operationId: addReviewToMovie
       requestBody:
         content:
@@ -126,6 +127,25 @@ paths:
                 $ref: "#/components/schemas/Review"
         "400":
           description: unsuccessful operation an error occurred
+    delete:
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      summary: Delete a user from the database
+      operationId: delUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+        required: true
+      responses:
+        "201":
+          description: User deleted
+        "400":
+          description: unsuccessful operation an error occurred
+
   /user/{reviewId}:
     get:
       tags:
