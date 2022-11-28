@@ -1,8 +1,7 @@
 // imports
 const userService = require("../services/user");
-const cache = require("../caching/caching");
 const models = require("../models");
-const cache = require("cookie-parser");
+const cookie = require("cookie-parser");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
