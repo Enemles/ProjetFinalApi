@@ -1,4 +1,9 @@
-const db = require("../models");
+const db = require('../models');
+
+// get all reviews
+exports.getReview = () => {
+  return db.review.findAll();
+};
 
 //affiche toutes les reviews possédant le même username,
 //utilisé lors de l'affichage d'un profile
