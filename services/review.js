@@ -1,6 +1,6 @@
 const db = require('../models');
 
-// get all reviews
+// get totutes les reviews
 exports.getReview = () => {
   return db.review.findAll();
 };
