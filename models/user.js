@@ -11,6 +11,11 @@ module.exports = (instance) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          isEmail: {
+            msg: "Must be a valid email address",
+          }
+        }
       },
       password: {
         type: DataTypes.STRING,

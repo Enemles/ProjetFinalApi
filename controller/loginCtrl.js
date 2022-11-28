@@ -19,23 +19,30 @@ module.exports = {
       }
       const oldUser = await userService.getUserById(username);
 
-      if (oldUser) {
+      if (!oldUser) {
         return res.status(409).send("User Already Exist. Please Login");
       }
 
       encryptedPassword = await bcrypt.hash(password, 10);
 
-      const user = await models.user.create({
+      const user = await userService.addUser(
         username,
-        email: email.toLowerCase(),
-        password: encryptedPassword,
+        email.toLowerCase(),
+        encryptedPassword,
         firstname,
         lastname,
-        roleId: 2,
-      });
+        2
+      );
 
       // return new user
-      res.status(201).json(user);
+      res.status(201).json({
+        response: 'User added successfully',
+        username: user.username,
+        email: user.email,
+        firstname: user.firstname,
+        lastname: user.lastname,
+
+      });
     } catch (err) {
       console.log(err);
     }

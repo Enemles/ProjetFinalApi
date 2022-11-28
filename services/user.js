@@ -19,8 +19,8 @@ exports.getUserById = (username) => {
 
 
 //ajoute un utilisateur à la base, appelé lorsqu'un nouvel utilisateur se register
-exports.addUser = (username, email, password, firstname, lastname) => {
-  return db.user.create({ username, email, password, firstname, lastname });
+exports.addUser = (username, email, password, firstname, lastname, roleId) => {
+  return db.user.create({ username, email, password, firstname, lastname , roleId});
 };
 
 
