@@ -4,11 +4,11 @@ module.exports = (instance) => {
   return instance.define(
     'user',
     {
-      userId: {
+      username: {
         type: DataTypes.STRING,
         primaryKey: true,
       },
-      mail: {
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -18,25 +18,19 @@ module.exports = (instance) => {
       },
       firstname: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       lastname: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       roleId: {
         type: DataTypes.INTEGER,
-      },
-      reviewId: {
-        type: DataTypes.INTEGER,
-        get() {
-          return this.getDataValue('id').split(';');
-        },
-        set(val) {
-          this.setDataValue('id', val.join(';'));
-        },
-      },
+      }
     },
     {
       timestamps: false,
     }
+    
   );
 };
