@@ -3,10 +3,10 @@ const reviewCtrl = require('../controller/reviewCtrl');
 const router = express.Router();
 
 router.get('/', reviewCtrl.getReviews);
-// router.post('/', reviewCtrl.addReview);
-router.delete('/reviewId', reviewCtrl.delReview);
-router.get('/reviewId', reviewCtrl.getReviewById);
-// router.post('/like/:id', reviewCtrl.Like);
-// router.post('/dislike/:id', reviewCtrl.Dislike);
+router.post('/', reviewCtrl.addReview);
+router.delete('/:reviewId', reviewCtrl.delReview);
+router.get('/:reviewId', reviewCtrl.getReviewById);
+router.put('/:reviewId/like', reviewCtrl.Like);
+router.put('/:reviewId/dislike', reviewCtrl.Dislike);
 
 module.exports = router;

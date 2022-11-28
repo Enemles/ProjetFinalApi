@@ -8,7 +8,7 @@ module.exports = (instance) => {
       reviewId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoincrement: true,
+        autoIncrement: true,
       },
       username: {
         type: DataTypes.STRING,
