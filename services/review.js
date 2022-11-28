@@ -1,11 +1,11 @@
 const db = require("../models");
 
-//affiche une review par son id, utile en bouclant dessus pour l'affichage du profile
-//et pour se focus sur une review afin de la like ou dislike
-exports.getReviewById = (id) => {
+//affiche toutes les reviews possédant le même username,
+//utilisé lors de l'affichage d'un profile
+exports.getReviewByUsername = (username) => {
   return db.review.findAll({
     where: {
-      id,
+      username,
     },
   });
 };
