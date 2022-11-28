@@ -17,7 +17,8 @@ module.exports = {
   },
 
   getCurrentUser: async (req, res) => {
-    const currentUser = cache.getCachedValue(currentUser);
+    const { cookies } = req;
+    const currentUser = cookies.username;
     if (!currentUser) {
       throw new error("Problème de mise en cache de l'utilisateur");
     }
