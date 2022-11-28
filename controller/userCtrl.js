@@ -1,5 +1,5 @@
-const userService = require("..services/user.js");
-const reviewService = require("../services/review");
+const userService = require('../services/user.js');
+const reviewService = require('../services/review');
 
 exports.getUsers = async (req, res) => {
   const listUsers = await userService.getUsers();
@@ -20,6 +20,6 @@ exports.delUser = async (req, res) => {
   await userService.delUser(username);
   const user = await userService.getUserById(username);
   if (!user) {
-    res.json({ success: true, description: "User has been deleted" });
+    res.json({ success: true, description: 'User has been deleted' });
   }
 };
