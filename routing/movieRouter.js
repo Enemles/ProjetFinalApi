@@ -1,10 +1,8 @@
-// const express = require("express");
-// router = express.Router();
-// movieCtrl = require("../controller/movieCtrl");
+const express = require("express");
+router = express.Router();
+movieCtrl = require("../controller/movieCtrl");
 
-// router.get("/", movieCtrl.getMovies);
-// router.get("/:id", movieCtrl.getMovieById);
+router.get("/", movieCtrl.getMovies);
+router.get("/toprated", movieCtrl.getTopRated);
 
-// router.post("/:id", movieCtrl.addReview);
-
-// module.exports = router;
+module.exports = router;
