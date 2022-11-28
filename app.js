@@ -20,11 +20,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/', router);
 
-// Configure routes
-app.get('/', function (req, res) {
-  res.status(200).send('<h1>Nous rompishâmes</h1>');
-});
-
 // Error config
 app.use((error, req, res, next) => {
   res
