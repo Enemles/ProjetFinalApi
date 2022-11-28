@@ -12,7 +12,7 @@ module.exports = {
       const { title, note, comment, moviename } = req.body;
 
       if (!(title && note && comment && moviename)) {
-        res.status(400).send('All input is required');
+        res.status(400).send('All input are required');
       }
 
       const review = await models.review.create({
