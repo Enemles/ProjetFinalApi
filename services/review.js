@@ -1,4 +1,9 @@
-const db = require("../models");
+const db = require('../models');
+
+// get all reviews
+exports.getReview = () => {
+  return db.review.findAll();
+};
 
 //affiche une review par son id, utile en bouclant dessus pour l'affichage du profile
 //et pour se focus sur une review afin de la like ou dislike
