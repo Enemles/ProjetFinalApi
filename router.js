@@ -8,8 +8,8 @@ exports.router = (function () {
   let router = express.Router();
 
   // user routes
-  router.route('/user/register/').get(userCtrl.register);
-  router.route('/user/login/').post(userCtrl.login);
+  router.route('/register').get(userCtrl.register);
+  router.route('/login').post(userCtrl.login);
 
   //review  routes
 
