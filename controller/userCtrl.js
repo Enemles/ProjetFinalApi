@@ -1,4 +1,4 @@
-const userService = require("..services/user.js");
+const userService = require("../services/user.js");
 const reviewService = require("../services/review");
 
 exports.getUsers = async (req, res) => {
