@@ -1,8 +1,8 @@
 // imports
 const userService = require("../services/user");
 const cache = require("../caching/caching");
-const models = require('../models');
-
+const models = require("../models");
+const cache = require("cookie-parser");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -38,12 +38,11 @@ module.exports = {
 
       // return new user
       res.status(201).json({
-        response: 'User added successfully',
+        response: "User added successfully",
         username: user.username,
         email: user.email,
         firstname: user.firstname,
         lastname: user.lastname,
-
       });
     } catch (err) {
       console.log(err);
@@ -74,8 +73,9 @@ module.exports = {
         // save user token
         user.token = token;
 
-        //caching the username to know it throught the app
-        await cache.cachingValue("currentUser", 900, user.username);
+        res.cookie("username", username);
+        res.cookie("token", token);
+        res.cookie("userRole", user.role);
 
         // user
         res.status(200).json({ token: token });

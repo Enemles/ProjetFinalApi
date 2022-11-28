@@ -1,7 +1,7 @@
 // Imports
-const express = require('express');
-const OpenApiValidator = require('express-openapi-validator');
-const router = require('./routing/index');
+const express = require("express");
+const OpenApiValidator = require("express-openapi-validator");
+const router = require("./routing/index");
 
 // Instantiate server
 const app = express();
@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 //   })
 // );
 
-app.use('/', router);
+app.use("/", router);
 
 // Error config
 app.use((error, req, res, next) => {
