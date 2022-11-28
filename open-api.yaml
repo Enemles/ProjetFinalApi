@@ -24,8 +24,6 @@ paths:
     post:
       tags:
         - Authentication
-      security:
-        - bearerAuth: []
       summary: Register as a new user
       operationId: register
       requestBody:
@@ -47,8 +45,6 @@ paths:
     post:
       tags:
         - Authentication
-      security:
-        - bearerAuth: []
       summary: Login as a new user
       description: Login as a new user
       operationId: login
@@ -75,8 +71,7 @@ paths:
       security:
         - bearerAuth: []
       summary: Show my profile
-      description: Returns all the reviews belonging to this user
-      operationId: getUser
+      operationId: getCurrentUser
       responses:
         "200":
           description: successful operation
@@ -131,14 +126,97 @@ paths:
                 $ref: "#/components/schemas/Review"
         "400":
           description: unsuccessful operation an error occurred
-  /user/{reviewId}:
+    put:
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      summary: Modify an element of our own profile
+      operationId: modifyUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+        required: true
+      responses:
+        "201":
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: unsuccessful operation an error occurred
+  /user/all:
+    get:
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      summary: Show all users
+      operationId: getUsers
+      responses:
+        "201":
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: unsuccessful operation an error occurred
+  /user/{username}:
+    get:
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      summary: Show a user profile by his username
+      operationId: getUserById
+      parameters:
+        - name: username
+          in: path
+          description: username of the seeked user
+          schema:
+            type: string
+          required: true
+      responses:
+        "201":
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: unsuccessful operation an error occurred
+    delete:
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      summary: Delete a profile
+      operationId: delUser
+      parameters:
+        - name: username
+          in: path
+          description: username of the deleted user
+          schema:
+            type: string
+          required: true
+      responses:
+        "201":
+          description: Successfull operation, user deleted
+        "400":
+          description: unsuccessful operation an error occurred
+  /review/{reviewId}:
     get:
       tags:
         - Review
       security:
         - bearerAuth: []
       summary: Find review by reviewId
-      description: Returns a single review
       operationId: getReviewById
       parameters:
         - name: reviewId
@@ -178,9 +256,9 @@ paths:
             format: int64
       responses:
         "200":
-          description: Livre bien supprimé
+          description: Review bien supprimé
         "400":
-          description: Invalid Book value
+          description: Invalid review value
     put:
       tags:
         - Review
@@ -217,8 +295,8 @@ paths:
           description: Review not found
         "405":
           description: Validation exception
-  /user/{reviewId}/like:
-    post:
+  /review/{reviewId}/like:
+    put:
       tags:
         - Review
       security:
@@ -240,13 +318,13 @@ paths:
           $ref: "#/components/responses/NotFound"
         "5XX":
           $ref: "#/components/responses/InternalServerError"
-  /user/{reviewId}/dislike:
-    post:
+  /review/{reviewId}/dislike:
+    put:
       tags:
         - Review
       security:
         - bearerAuth: []
-      summary: Add a like to a review
+      summary: Add a dislike to a review
       operationId: addDisLike
       parameters:
         - name: reviewId
@@ -263,6 +341,23 @@ paths:
           $ref: "#/components/responses/NotFound"
         "5XX":
           $ref: "#/components/responses/InternalServerError"
+  /movies:
+    get:
+      tags:
+        - Movies
+      security:
+        - bearerAuth: []
+      summary: Show all movies concerned by a review on the site
+      operationId: getMovies
+      responses:
+        "201":
+          description: All movies
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Movies"
+        "4XX":
+          description: unsuccessful operation an error occurred
 
 components:
   schemas:
@@ -348,12 +443,22 @@ components:
           example: Un commentaire incroyable ehh nan c jason
         like:
           type: integer
-        comment:
-          type: string
-          example: Un commentaire incroyable ehh nan c jason
-        like:
-          type: integer
           example: 5
+    Movies:
+      required:
+        - moviename
+        - releasedate
+        - globalrating
+      properties:
+        moviename:
+          type: string
+          example: Attrape moi si tu peux
+        releasedate:
+          type: string
+          example: 24/02/2002
+        globalrating:
+          type: number
+          example: 7,4
   responses:
     NotFound:
       description: "The resource specified is not found"
