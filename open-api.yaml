@@ -11,68 +11,74 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.11
 servers:
-  - url: http://localhost:3000/
+  - url: http://localhost:3000
 tags:
-  - name: Register
-    description: Sign up as a new user
-  - name: Login
-    description: Log in as a user
-  - name : Me
+  - name: Authentication
+    description: Register and login as a new user
+  - name: User
     description: User interface
-  - name : Review
+  - name: Review
     description: User reviews
 paths:
   /login/register:
     post:
       tags:
-        - Register
+        - Authentication
+      security:
+        - bearerAuth: []
       summary: Register as a new user
-      description: Register as a new user
-      operationId: addUser
+      operationId: register
       requestBody:
-        description: Register as a new user
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/UserRegister"
         required: true
       responses:
-        '201':
+        "201":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/UserLogged"
+        "400":
+          description: unsuccessful operation an error occurred
   /login:
     post:
       tags:
-        - Login
-      summary: Register as a new user
-      description: Register as a new user
-      operationId: addUser
+        - Authentication
+      security:
+        - bearerAuth: []
+      summary: Login as a new user
+      description: Login as a new user
+      operationId: login
       requestBody:
-        description: Register as a new user
+        description: Login as a new user
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/UserLogin"
         required: true
       responses:
-        '201':
+        "201":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-  /me/reviews:
+                $ref: "#/components/schemas/UserLogged"
+        "400":
+          description: unsuccessful operation an error occurred
+  /user:
     get:
       tags:
-        - Me
-      summary: Find all my reviews
+        - User
+      security:
+        - bearerAuth: []
+      summary: Show my profile
       description: Returns all the reviews belonging to this user
-      operationId: getAllReviews
+      operationId: getUser
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
@@ -81,46 +87,55 @@ paths:
                   - $ref: "#/components/schemas/User"
                 type: array
                 items:
-                  $ref: '#/components/schemas/ReviewGet'
+                  $ref: "#/components/schemas/ReviewGet"
                 example:
                   - reviewId: 1
-                    movieTitle: Sherlock Holmes
+                    reviewTitle: Big brain
+                    movieName: Sherlock Holmes
                     rating: 2
-                    description: Description
+                    comment: Le gars va trop vite, bonne réalisation
+                    like: 9
                   - reviewId: 2
-                    movieTitle: Jumanji
+                    reviewTitle: The rock en feu
+                    movieName: Jumanji
                     rating: 5
-                    description: non
+                    comment: Gros film pour les enfants
+                    like: 3
                   - reviewId: 3
-                    movieTitle: Star Wars
-                    rating: 0
-                    description: obligatoire
-        '400':
+                    reviewTitle: Princesse leïa RIP mais le boulot...
+                    movieName: Star Wars
+                    rating: 10
+                    comment: ça tire dans tous les sens
+                    like: 4
+        "400":
           description: unsuccessful operation an error occurred
     post:
       tags:
-        - Me
+        - User
+      security:
+        - bearerAuth: []
       summary: Add a new review to a movie
       operationId: addReviewToMovie
       requestBody:
-        description: Create a new book in the lib
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Review'
+              $ref: "#/components/schemas/Review"
         required: true
       responses:
-        '201':
+        "201":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Review'     
-  /me/reviews/{reviewId}: 
+                $ref: "#/components/schemas/Review"
+        "400":
+          description: unsuccessful operation an error occurred
+  /user/{reviewId}:
     get:
       tags:
-        - Me
-      security: 
+        - Review
+      security:
         - bearerAuth: []
       summary: Find review by reviewId
       description: Returns a single review
@@ -134,135 +149,195 @@ paths:
             type: integer
             format: int64
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReviewGet'
-        '400':
+                $ref: "#/components/schemas/ReviewGet"
+        "400":
           description: Invalid ID supplied
-        '404':
+        "404":
           description: Review not found
 
     delete:
-        tags:
-          - Me
-        summary: Deletes a review
-        description: delete a review
-        operationId: deleteReviewById
-        parameters:
-          - name: reviewId
-            in: path
-            description: Review id to delete
-            required: true
-            schema:
-              type: integer
-              format: int64
-        responses:
-          '200':
-            description: Livre bien supprimé
-          '400':
-            description: Invalid Book value
-    put:
-      tags:
-        - Me
-      summary: Update an existing review
-      description: Update an existing review by Id
-      operationId: updateReviewById
-      requestBody:
-        description: Update an existent review
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ReviewGet'
-        required: true
-      responses:
-        '200':
-          description: Successful operation 
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ReviewGet' 
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: Review not found
-        '405':
-          description: Validation exception
-  /reviews/{userId}:
-    get:
       tags:
         - Review
-      summary: Find all the reviews belonging to userId
-      description: Returns all the reviews belonging to userId
-      operationId: getReviewsByUserId
+      security:
+        - bearerAuth: []
+      summary: Delete a review
+      description: delete a review
+      operationId: deleteReviewById
       parameters:
-        - name: userId
+        - name: reviewId
           in: path
-          description: ID of user to return
+          description: Review id to delete
           required: true
           schema:
             type: integer
             format: int64
       responses:
-        '200':
-          description: successful operation
+        "200":
+          description: Livre bien supprimé
+        "400":
+          description: Invalid Book value
+    put:
+      tags:
+        - Review
+      security:
+        - bearerAuth: []
+      summary: Update an existing review
+      description: Update an existing review by Id
+      operationId: updateReviewById
+      parameters:
+        - name: reviewId
+          in: path
+          description: Review id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Update an existent review
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReviewGet"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReviewGet'
-        '400':
+                $ref: "#/components/schemas/ReviewGet"
+        "400":
           description: Invalid ID supplied
-        '404':
+        "404":
           description: Review not found
-  /reviews/{reviewId}/like:
+        "405":
+          description: Validation exception
+  /user/{reviewId}/like:
     post:
-      tags: 
+      tags:
         - Review
+      security:
+        - bearerAuth: []
       summary: Add a like to a review
       operationId: addLike
+      parameters:
+        - name: reviewId
+          in: path
+          description: ID of review to return
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "2XX":
           description: "Review liked"
-        "4XX": 
+        "4XX":
           $ref: "#/components/responses/NotFound"
-        "5XX": 
+        "5XX":
           $ref: "#/components/responses/InternalServerError"
-        
-  # /reviews/{reviewId}/dislike:
-  #   post:
+  /user/{reviewId}/dislike:
+    post:
+      tags:
+        - Review
+      security:
+        - bearerAuth: []
+      summary: Add a like to a review
+      operationId: addDisLike
+      parameters:
+        - name: reviewId
+          in: path
+          description: ID of review to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "2XX":
+          description: "Review liked"
+        "4XX":
+          $ref: "#/components/responses/NotFound"
+        "5XX":
+          $ref: "#/components/responses/InternalServerError"
 
 components:
   schemas:
     User:
       required:
-        - userId
+        - userName
+        - mail
+        - firstname
+        - lastname
       type: object
       properties:
-        userId:
+        userName:
           type: string
-          example: "Jason"
+          example: JasonDerulo98
+        mail:
+          type: string
+          example: jasonderulo@gmail.com
+        firstname:
+          type: string
+          example: Jason
+        lastname:
+          type: string
+          example: Derulo
     UserRegister:
       allOf:
-        - $ref: '#/components/schemas/User'
+        - $ref: "#/components/schemas/User"
       required:
-        - email
         - password
+      type: object
+      properties:
+        password:
+          type: string
+          example: jasonLeGazon
+    UserLogin:
+      required:
+        - userName
+        - password
+      type: object
+      properties:
+        userName:
+          type: string
+          example: JasonDerulo98
+        password:
+          type: string
+          example: jasonLeGazon
+    UserLogged:
+      allOf:
+        - $ref: "#/components/schemas/User"
+      required:
+        - token
+      type: object
+      properties:
+        token:
+          type: string
+          example: jeSuisUnToken
     ReviewGet:
       allOf:
         - properties:
             reviewId:
               type: integer
               example: 4
-        - $ref: '#/components/schemas/Review'
+        - $ref: "#/components/schemas/Review"
       required:
         - reviewId
     Review:
       required:
+        - reviewTitle
         - movieName
         - rating
+        - comment
+        - like
       properties:
+        reviewTitle:
+          type: string
+          example: I *** loved this shit
         movieName:
           type: string
           example: Star wars
@@ -273,10 +348,13 @@ components:
           example: Un commentaire incroyable ehh nan c jason
         like:
           type: integer
-        description:
+        comment:
           type: string
-          example: Une description incroyable ehh nan c jason
-  responses: 
+          example: Un commentaire incroyable ehh nan c jason
+        like:
+          type: integer
+          example: 5
+  responses:
     NotFound:
       description: "The resource specified is not found"
       content:
