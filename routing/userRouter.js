@@ -1,8 +1,9 @@
 const express = require('express');
 const userCtrl = require('../controller/userCtrl');
-router = express.Router();
+const router = express.Router();
 
-// router.get("/:userId", userCtrl.getUserById);
+router.get('/:userId', userCtrl.getUserById);
+router.get('/', userCtrl.getUsers);
 // router.get('/:userId/:reviewId', userCtrl.getReviewOnUserById);
 
 // router.post("/:userId/:reviewId/like", userCtrl.likeAReview);

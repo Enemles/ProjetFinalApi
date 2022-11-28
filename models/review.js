@@ -1,9 +1,9 @@
-const DataTypes = require("sequelize");
-const { movie } = require(".");
+const DataTypes = require('sequelize');
+const { movie } = require('.');
 
 module.exports = (instance) => {
   return instance.define(
-    "review",
+    'review',
     {
       reviewId: {
         type: DataTypes.INTEGER,
