@@ -1,8 +1,7 @@
 // Imports
 const express = require('express');
 const OpenApiValidator = require('express-openapi-validator');
-const router = require('./routing/index')
-
+const router = require('./routing/index');
 
 // Instantiate server
 const app = express();
@@ -20,11 +19,6 @@ app.use(
 );
 
 app.use('/', router);
-
-// Configure routes
-app.get('/', function (req, res) {
-  res.status(200).send('<h1>Nous rompishâmes</h1>');
-});
 
 // Error config
 app.use((error, req, res, next) => {
