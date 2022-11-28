@@ -71,8 +71,7 @@ paths:
       security:
         - bearerAuth: []
       summary: Show my profile
-      description: Returns all the reviews belonging to this user
-      operationId: getUser
+      operationId: getCurrentUser
       responses:
         "200":
           description: successful operation
@@ -87,19 +86,19 @@ paths:
                 example:
                   - reviewId: 1
                     reviewTitle: Big brain
-                    moviename: Sherlock Holmes
+                    movieName: Sherlock Holmes
                     rating: 2
                     comment: Le gars va trop vite, bonne réalisation
                     like: 9
                   - reviewId: 2
                     reviewTitle: The rock en feu
-                    moviename: Jumanji
+                    movieName: Jumanji
                     rating: 5
                     comment: Gros film pour les enfants
                     like: 3
                   - reviewId: 3
                     reviewTitle: Princesse leïa RIP mais le boulot...
-                    moviename: Star Wars
+                    movieName: Star Wars
                     rating: 10
                     comment: ça tire dans tous les sens
                     like: 4
@@ -127,13 +126,13 @@ paths:
                 $ref: "#/components/schemas/Review"
         "400":
           description: unsuccessful operation an error occurred
-    delete:
+    put:
       tags:
         - User
       security:
         - bearerAuth: []
-      summary: Delete a user from the database
-      operationId: delUser
+      summary: Modify an element of our own profile
+      operationId: modifyUser
       requestBody:
         content:
           application/json:
@@ -142,18 +141,82 @@ paths:
         required: true
       responses:
         "201":
-          description: User deleted
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
         "400":
           description: unsuccessful operation an error occurred
-
-  /user/{reviewId}:
+  /user/all:
+    get:
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      summary: Show all users
+      operationId: getUsers
+      responses:
+        "201":
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: unsuccessful operation an error occurred
+  /user/{username}:
+    get:
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      summary: Show a user profile by his username
+      operationId: getUserById
+      parameters:
+        - name: username
+          in: path
+          description: username of the seeked user
+          schema:
+            type: string
+          required: true
+      responses:
+        "201":
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: unsuccessful operation an error occurred
+    delete:
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      summary: Delete a profile
+      operationId: delUser
+      parameters:
+        - name: username
+          in: path
+          description: username of the deleted user
+          schema:
+            type: string
+          required: true
+      responses:
+        "201":
+          description: Successfull operation, user deleted
+        "400":
+          description: unsuccessful operation an error occurred
+  /review/{reviewId}:
     get:
       tags:
         - Review
       security:
         - bearerAuth: []
       summary: Find review by reviewId
-      description: Returns a single review
       operationId: getReviewById
       parameters:
         - name: reviewId
@@ -193,9 +256,9 @@ paths:
             format: int64
       responses:
         "200":
-          description: Livre bien supprimé
+          description: Review bien supprimé
         "400":
-          description: Invalid Book value
+          description: Invalid review value
     put:
       tags:
         - Review
@@ -232,8 +295,8 @@ paths:
           description: Review not found
         "405":
           description: Validation exception
-  /user/{reviewId}/like:
-    post:
+  /review/{reviewId}/like:
+    put:
       tags:
         - Review
       security:
@@ -255,13 +318,13 @@ paths:
           $ref: "#/components/responses/NotFound"
         "5XX":
           $ref: "#/components/responses/InternalServerError"
-  /user/{reviewId}/dislike:
-    post:
+  /review/{reviewId}/dislike:
+    put:
       tags:
         - Review
       security:
         - bearerAuth: []
-      summary: Add a like to a review
+      summary: Add a dislike to a review
       operationId: addDisLike
       parameters:
         - name: reviewId
@@ -281,41 +344,35 @@ paths:
   /movies:
     get:
       tags:
-        - movies
+        - Movies
       security:
         - bearerAuth: []
-      summary: Show all the movies
+      summary: Show all movies concerned by a review on the site
       operationId: getMovies
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Movies"
-        required: true
       responses:
         "201":
-          description: Successful operation
+          description: All movies
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Movies"
-        "400":
+        "4XX":
           description: unsuccessful operation an error occurred
 
 components:
   schemas:
     User:
       required:
-        - username
-        - email
+        - userName
+        - mail
         - firstname
         - lastname
       type: object
       properties:
-        username:
+        userName:
           type: string
           example: JasonDerulo98
-        email:
+        mail:
           type: string
           example: jasonderulo@gmail.com
         firstname:
@@ -336,11 +393,11 @@ components:
           example: jasonLeGazon
     UserLogin:
       required:
-        - username
+        - userName
         - password
       type: object
       properties:
-        username:
+        userName:
           type: string
           example: JasonDerulo98
         password:
@@ -368,7 +425,7 @@ components:
     Review:
       required:
         - reviewTitle
-        - moviename
+        - movieName
         - rating
         - comment
         - like
@@ -376,7 +433,7 @@ components:
         reviewTitle:
           type: string
           example: I *** loved this shit
-        moviename:
+        movieName:
           type: string
           example: Star wars
         rating:
@@ -390,18 +447,18 @@ components:
     Movies:
       required:
         - moviename
-        - releaseDate
-        - internetNote
+        - releasedate
+        - globalrating
       properties:
         moviename:
           type: string
-          example: Pulp Fiction
-        releaseDate:
+          example: Attrape moi si tu peux
+        releasedate:
           type: string
-          example: 12/05/1995
-        internetNote:
+          example: 24/02/2002
+        globalrating:
           type: number
-          example: 7.80
+          example: 7,4
   responses:
     NotFound:
       description: "The resource specified is not found"
