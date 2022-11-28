@@ -3,8 +3,8 @@ const redis = require("redis");
 const client = redis.createClient(6379);
 
 module.exports = {
-  cachingValue: async function (key, duration, value) {
-    return await client.setEx(key, duration, value);
+  cachingValue: function (key, duration, value) {
+    return client.setex(key, duration, value);
   },
 
   getCachedValue: async function (key) {
