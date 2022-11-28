@@ -1,10 +1,10 @@
 // imports
-const userService = require('../services/user');
-const models = require('../models');
+const userService = require("../services/user");
+const cache = require("../caching/caching");
 
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
@@ -15,24 +15,23 @@ module.exports = {
       const { username, email, firstname, lastname, password } = req.body;
 
       if (!(username && email && password && firstname && lastname)) {
-        res.status(400).send('All input is required');
+        res.status(400).send("All input is required");
       }
       const oldUser = await userService.getUserById(username);
 
       if (oldUser) {
-        return res.status(409).send('User Already Exist. Please Login');
+        return res.status(409).send("User Already Exist. Please Login");
       }
-
-      console.log(username);
 
       encryptedPassword = await bcrypt.hash(password, 10);
 
       const user = await models.user.create({
         username,
-        firstname,
-        lastname,
         email: email.toLowerCase(),
         password: encryptedPassword,
+        firstname,
+        lastname,
+        roleId: 2,
       });
 
       // return new user
@@ -48,7 +47,7 @@ module.exports = {
 
       // Validate user input
       if (!(username && password)) {
-        res.status(400).send('All input is required');
+        res.status(400).send("All input is required");
       }
       // Validate if user exist in our database
       const user = await models.user.findOne({ where: { username: username } });
@@ -56,25 +55,23 @@ module.exports = {
       if (user && (await bcrypt.compare(password, user.password))) {
         // Create token
         const token = jwt.sign(
-          {
-            username: user.username,
-            email: user.email,
-            firstname: user.firstname,
-            lastname: user.lastname,
-          },
+          { username: user.username },
           `${process.env.SECRET}`,
           {
-            expiresIn: '2h',
+            expiresIn: "2h",
           }
         );
 
         // save user token
         user.token = token;
 
+        //caching the username to know it throught the app
+        await cache.cachingValue(currentUser, 900, user.username);
+
         // user
         res.status(200).json({ token: token });
       }
-      res.status(400).send('Invalid Credentials');
+      res.status(400).send("Invalid Credentials");
     } catch (err) {
       console.log(err);
     }
