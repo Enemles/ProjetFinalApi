@@ -1,6 +1,8 @@
 // imports
 const userService = require("../services/user");
 const cache = require("../caching/caching");
+const models = require('../models');
+
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -73,7 +75,7 @@ module.exports = {
         user.token = token;
 
         //caching the username to know it throught the app
-        await cache.cachingValue(currentUser, 900, user.username);
+        await cache.cachingValue("currentUser", 900, user.username);
 
         // user
         res.status(200).json({ token: token });

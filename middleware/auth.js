@@ -1,28 +1,32 @@
 const models = require('../models');
+const userService = require("../services/user");
+const cache = require("../caching/caching");
+
 const jwt = require("jsonwebtoken");
 
 const config = process.env;
 
-const roleAdmin = 1;
-
-
 module.exports = {
     verifyAdmin : async (req, res, next) => {
-        const userRole = await models.user.findAll({ where: { roleId: roleAdmin } });
-        let token = req.headers["authorization"];
+        const currentUser = cache.getCachedValue(currentUser);
+        const admin = currentUser.role;
+        if (admin != 1) {
+            res.status(403).send("User has no permissions");
+        }
+        const token = currentUser.token;
+
         if (!token) {
-            return res.status(403).send("A token is required for authentication");
+            res.status(403).send("A token is required for authentication");
         }
         try {
             const decoded = jwt.verify(token, config.TOKEN_KEY);
             req.user = decoded;
         } catch (err) {
-            return res.status(401).send("Invalid Token");
+            res.status(401).send("Invalid Token");
         }
-        return next();
+        next();
     }
 }
 
-console.log(userRole);
 
 

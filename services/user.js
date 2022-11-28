@@ -10,11 +10,7 @@ exports.getUsers = () => {
 
 //recherche un utilisateur par son id afin d'afficher son profile
 exports.getUserById = (username) => {
-  return db.user.findAll({
-    where: {
-      username,
-    },
-  });
+  return db.user.findByPk(username);
 };
 
 
