@@ -1,6 +1,7 @@
 // imports
-const reviewService = require('../services/review');
-const models = require('../models');
+const reviewService = require("../services/review");
+const movieService = require("../services/movie");
+const models = require("../models");
 
 module.exports = {
   getReviews: async (req, res) => {
@@ -12,7 +13,10 @@ module.exports = {
       const { title, note, comment, moviename } = req.body;
 
       if (!(title && note && comment && moviename)) {
-        res.status(400).send('All input are required');
+        res.status(400).send("All input are required");
+      }
+      if (!movieService.getMovieByMoviename(moviename)) {
+        movieService.addMovie(moviename);
       }
 
       const review = await models.review.create({
@@ -32,7 +36,7 @@ module.exports = {
     await reviewService.delReview(reviewId);
     const rev = reviewService.getReviewByUsername(reviewId);
     if (!rev) {
-      res.json({ success: true, description: 'User has been deleted' });
+      res.json({ success: true, description: "User has been deleted" });
     }
   },
   getReviewById: async (req, res) => {
@@ -40,7 +44,7 @@ module.exports = {
     const reviewService = await userService.getUserById(reviewId);
     const rev = reviewService.getReviewByUsername(reviewId);
     if (!rev) {
-      res.json({ success: true, description: 'User has been deleted' });
+      res.json({ success: true, description: "User has been deleted" });
     }
   },
   Like: async (req, res) => {
