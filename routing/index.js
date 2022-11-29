@@ -16,9 +16,7 @@ router.use("/login", authenticationRouter);
 
 router.use("/user", authMiddleware.verifyAuthentication, userRouter);
 
-// router.use('/movieDb',authMiddleware.verifyAuthentication, movieDbRouter);
-
-// router.use("/movies",authMiddleware.verifyAuthentication, movieRouter);
+router.use("/movies",authMiddleware.verifyAuthentication, movieRouter);
 
 router.use("/review", authMiddleware.verifyAuthentication, reviewRouter);
 
