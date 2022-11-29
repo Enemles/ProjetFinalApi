@@ -23,7 +23,7 @@ module.exports = {
     }
     const user = userService.getUserByUsername(currentUser);
     const reviews = reviewService.getReviewByUsername(currentUser);
-    if (user && user.lenngth === 1) {
+    if (user && user.length === 1) {
       res.json({ success: true, header: user, data: reviews });
     }
   },
