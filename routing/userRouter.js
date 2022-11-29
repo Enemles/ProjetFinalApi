@@ -1,11 +1,11 @@
-const express = require('express');
-const userCtrl = require('../controller/userCtrl');
+const express = require("express");
+const userCtrl = require("../controller/userCtrl");
 const router = express.Router();
+const authMiddleware = require("../middleware/auth");
 
-router.get('/', userCtrl.getUsers);
-// router.get('/:userId/:reviewId', userCtrl.getReviewOnUserById);
-
-// router.post("/:userId/:reviewId/like", userCtrl.likeAReview);
-// router.post("/:userId/:reviewId/dislike", userCtrl.dislikeAReview);
+router.get("/", userCtrl.getCurrentUser());
+router.get("/all", userCtrl.getUsers());
+router.get("/:userId", userCtrl.getUserByUsername());
+router.delete("/:user", authMiddleware.verifyAdmin(), userCtrl.delUser());
 
 module.exports = router;

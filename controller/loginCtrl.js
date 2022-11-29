@@ -77,7 +77,7 @@ module.exports = {
         res.cookie("userRole", user.role);
 
         // user
-        res.status(200).json({ token: token });
+        res.status(200).json({ token: token }).redirect("/user");
       }
       res.status(400).send("Invalid Credentials");
     } catch (err) {

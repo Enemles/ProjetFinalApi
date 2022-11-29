@@ -2,10 +2,11 @@
 const express = require("express");
 const OpenApiValidator = require("express-openapi-validator");
 const router = require("./routing/index");
+const cookie = require("cookie-parser");
 
 // Instantiate server
 const app = express();
-
+app.use(cookie());
 // Body Parser configuration
 app.use(express.json());
 app.use(express.text());
