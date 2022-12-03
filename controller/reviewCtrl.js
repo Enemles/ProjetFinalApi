@@ -1,5 +1,7 @@
 // imports
-const reviewService = require('../services/review');
+const reviewService = require("../services/review");
+const movieService = require("../services/movie");
+const models = require("../models");
 
 module.exports = {
   getReviews: async (req, res) => {
@@ -11,7 +13,10 @@ module.exports = {
       const { title, note, comment, moviename } = req.body;
 
       if (!(title && note && comment && moviename)) {
-        res.status(400).send('All input are required');
+        res.status(400).send("All input are required");
+      }
+      if (!movieService.getMovieByMoviename(moviename)) {
+        movieService.addMovie(moviename);
       }
 
       const review = await reviewService.addReview( title, note, comment, moviename );

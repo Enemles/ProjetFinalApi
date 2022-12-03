@@ -1,6 +1,7 @@
-const express = require('express');
-const reviewCtrl = require('../controller/reviewCtrl');
+const express = require("express");
+const reviewCtrl = require("../controller/reviewCtrl");
 const router = express.Router();
+const authMiddleware = require("../middleware/auth");
 
 router.get('/', reviewCtrl.getReviews);
 router.post('/', reviewCtrl.addReview);

@@ -5,6 +5,14 @@ exports.getMovies = () => {
   return db.movie.findAll();
 };
 
+exports.getMovieByMoviename = (moviename) => {
+  return db.movie.findAll({
+    where: {
+      moviename,
+    },
+  });
+};
+
 //méthode appelé lors de la création d'une review
 //sur un film inconnu en base de donnée
 exports.addMovie = (moviename) => {

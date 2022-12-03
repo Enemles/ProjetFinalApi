@@ -6,7 +6,7 @@ exports.getUsers = () => {
 };
 
 //recherche un utilisateur par son id afin d'afficher son profile
-exports.getUserById = (username) => {
+exports.getUserByUsername = (username) => {
   return db.user.findByPk(username);
 };
 
