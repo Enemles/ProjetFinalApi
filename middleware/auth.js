@@ -7,7 +7,7 @@ const config = process.env;
 module.exports = {
   verifyAdmin: async (req, res, next) => {
     const { cookies } = req;
-    if (cookies.userRole !== 1) {
+    if (cookies.userRole != 1) {
       res.status(403).send("User has no permissions");
     }
     next();

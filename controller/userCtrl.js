@@ -25,8 +25,7 @@ module.exports = {
     }
     try {
       const reviews = await reviewService.getReviewByUsername(currentUser);
-      const user = await userService.getUserByUsername(currentUser);   
-      console.log(user);   
+      const user = await userService.getUserByUsername(currentUser);    
       res.json({ success: true, header: user, data: reviews });
     } catch (error) {
       console.log(error);
@@ -34,11 +33,26 @@ module.exports = {
   },
 
   delUser: async (req, res) => {
-    const username = parseInt(req.params.id);
+    const username = req.params.username;
     await userService.delUser(username);
     const user = await userService.getUserByUsername(username);
     if (!user) {
       res.json({ success: true, description: "User has been deleted" });
     }
   },
+
+  modifyUser: async (req, res) => {
+    const { cookies } = req;
+    const currentUser = cookies.username;
+    const { firstname, email, lastname } = req.body;
+    const infoJson = { firstname, email, lastname };
+    const info = JSON.stringify(infoJson);
+    console.log(infoJson);
+    try {
+      const user = await userService.modifyUser(currentUser, infoJson);
+      res.json({ success: true, header: user });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 };
