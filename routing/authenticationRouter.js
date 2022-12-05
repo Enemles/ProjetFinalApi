@@ -1,12 +1,11 @@
 const express = require("express");
-router = express.Router();
 loginCtrl = require("../controller/loginCtrl");
 const cookies = require("cookie-parser");
-const { router } = require("../app");
+router = express.Router();
 
 router.use(cookies());
 
-router.post("/register", loginCtrl.register);
 router.post("/", loginCtrl.login);
+router.post("/register", loginCtrl.register);
 
 module.exports = router;

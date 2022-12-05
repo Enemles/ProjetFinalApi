@@ -7,11 +7,13 @@ module.exports = {
     res.json({ success: true, data: listUsers });
   },
   getUserByUsername: async (req, res) => {
-    const username = parseInt(req.params.id);
+    const username = req.params.username;
+    try {
     const user = await userService.getUserByUsername(username);
-    const reviews = reviewService.getReviewByUsername(username);
-    if (user && user.lenngth === 1) {
+    const reviews = await reviewService.getReviewByUsername(username);
       res.json({ success: true, header: user, data: reviews });
+    } catch (error) {
+      console.log(error)
     }
   },
 
@@ -21,10 +23,13 @@ module.exports = {
     if (!currentUser) {
       throw new error("Problème de mise en cache de l'utilisateur");
     }
-    const user = userService.getUserByUsername(currentUser);
-    const reviews = reviewService.getReviewByUsername(currentUser);
-    if (user && user.length === 1) {
+    try {
+      const reviews = await reviewService.getReviewByUsername(currentUser);
+      const user = await userService.getUserByUsername(currentUser);   
+      console.log(user);   
       res.json({ success: true, header: user, data: reviews });
+    } catch (error) {
+      console.log(error);
     }
   },
 

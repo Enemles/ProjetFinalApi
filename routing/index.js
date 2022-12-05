@@ -1,16 +1,16 @@
 const express = require("express");
 router = express.Router();
+
 const userRouter = require("./userRouter");
 const authenticationRouter = require("./authenticationRouter");
-// const movieRouter = require('./movieRouter');
-// const movieDbRouter = require('./movieDbRouter');
+const movieRouter = require('./movieRouter');
 const reviewRouter = require("./reviewRouter");
 
 const authMiddleware = require("../middleware/auth");
 
-router.use("/", (req, res) => {
-  res.redirect("/login");
-});
+// router.use("/", (req, res) => {
+//   res.redirect("/login");
+// });
 
 router.use("/login", authenticationRouter);
 
