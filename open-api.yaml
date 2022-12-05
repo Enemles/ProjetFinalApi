@@ -137,15 +137,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/User"
-        required: true
+              $ref: "#/components/schemas/UserPut"
       responses:
         "201":
           description: Successfull operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: "#/components/schemas/UserPut"
         "400":
           description: unsuccessful operation an error occurred
   /user/all:
@@ -413,6 +412,18 @@ components:
         token:
           type: string
           example: jeSuisUnToken
+    UserPut:
+      type: object
+      properties:
+        email:
+          type: string
+          example: JasonDerulo@hotmail.com
+        firstname:
+          type: string
+          example: jasonLe
+        lastname:
+          type: string
+          example: Gazon
     ReviewGet:
       allOf:
         - properties:
