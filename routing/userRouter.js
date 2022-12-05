@@ -1,6 +1,6 @@
 const express = require("express");
-const userCtrl = require("../controller/userCtrl");
 const router = express.Router();
+const userCtrl = require("../controller/userCtrl");
 const authMiddleware = require("../middleware/auth");
 
 router.get("/", userCtrl.getCurrentUser());

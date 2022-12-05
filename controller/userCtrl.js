@@ -24,8 +24,12 @@ module.exports = {
     const user = userService.getUserByUsername(currentUser);
     const reviews = reviewService.getReviewByUsername(currentUser);
     if (user && user.length === 1) {
-      res.json({ success: true, header: user, data: reviews });
+      res.status(201).json({ success: true, header: user, data: reviews });
     }
+    res.status(400).json({
+      success: false,
+      header: "Seems to have a problem with the current user",
+    });
   },
 
   delUser: async (req, res) => {
