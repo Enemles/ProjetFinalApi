@@ -11,42 +11,6 @@ dotenv.config();
 
 // routes
 module.exports = {
-  register: async function (req, res) {
-    try {
-      const { username, email, firstname, lastname, password } = req.body;
-
-      if (!(username && email && password && firstname && lastname)) {
-        res.status(400).send("All input is required");
-      }
-      const oldUser = await userService.getUserById(username);
-
-      if (!oldUser) {
-        return res.status(409).send("User Already Exist. Please Login");
-      }
-
-      encryptedPassword = await bcrypt.hash(password, 10);
-
-      const user = await userService.addUser(
-        username,
-        email.toLowerCase(),
-        encryptedPassword,
-        firstname,
-        lastname,
-        2
-      );
-
-      // return new user
-      res.status(201).json({
-        response: "User added successfully",
-        username: user.username,
-        email: user.email,
-        firstname: user.firstname,
-        lastname: user.lastname,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  },
   login: async function (req, res) {
     try {
       // Get user input
@@ -72,14 +36,53 @@ module.exports = {
         // save user token
         user.token = token;
 
+        
         res.cookie("username", username);
         res.cookie("token", token);
-        res.cookie("userRole", user.role);
+        res.cookie("userRole", user.roleId);
 
         // user
-        res.status(200).json({ token: token }).redirect("/user");
+        res
+          .status(200)  
+          .json({ token: token });
       }
       res.status(400).send("Invalid Credentials");
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  register: async function (req, res) {
+    try {
+      const { username, email, firstname, lastname, password } = req.body;
+
+      if (!(username && email && password && firstname && lastname)) {
+        res.status(400).send("All input is required");
+      }
+      const oldUser = await userService.getUserByUsername(username);
+
+      if (oldUser) {
+        return res.status(409).json({"error" : "User Already Exist. Please Login"});
+      }
+
+      encryptedPassword = await bcrypt.hash(password, 10);
+
+      const user = await userService.addUser(
+        username,
+        email.toLowerCase(),
+        encryptedPassword,
+        firstname,
+        lastname,
+        2
+      );
+
+      // return new user
+      res.status(201).json({
+        response: "User added successfully",
+        username: user.username,
+        email: user.email,
+        firstname: user.firstname,
+        lastname: user.lastname,
+      });
     } catch (err) {
       console.log(err);
     }

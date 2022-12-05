@@ -20,10 +20,10 @@ module.exports = {
         const decoded = jwt.verify(token, config.TOKEN_KEY);
         req.user = decoded;
       } catch (err) {
-        res.status(401).redirect("/login").send("Invalid Token");
+        res.status(401);
       }
       next();
     }
-    res.status(401).redirect("/login").send("You need to be authenticate");
+    res.status(401)
   },
 };

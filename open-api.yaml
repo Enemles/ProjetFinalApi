@@ -363,13 +363,13 @@ components:
   schemas:
     User:
       required:
-        - userName
+        - username
         - mail
         - firstname
         - lastname
       type: object
       properties:
-        userName:
+        username:
           type: string
           example: JasonDerulo98
         mail:
@@ -393,11 +393,11 @@ components:
           example: jasonLeGazon
     UserLogin:
       required:
-        - userName
+        - username
         - password
       type: object
       properties:
-        userName:
+        username:
           type: string
           example: JasonDerulo98
         password:
