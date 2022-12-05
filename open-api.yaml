@@ -363,7 +363,7 @@ components:
     User:
       required:
         - username
-        - mail
+        - email
         - firstname
         - lastname
       type: object
@@ -371,7 +371,7 @@ components:
         username:
           type: string
           example: JasonDerulo98
-        mail:
+        email:
           type: string
           example: jasonderulo@gmail.com
         firstname:
