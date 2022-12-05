@@ -10,6 +10,16 @@ exports.getUserByUsername = (username) => {
   return db.user.findByPk(username);
 };
 
+// //Modifie l'utilisateur actuellement connecté
+// exports.modifyUser = (username, info) => {
+//   return db.user.update(
+//       { info},
+//     {
+//       where : { info },  
+//     }
+//     )
+// };
+
 //ajoute un utilisateur à la base, appelé lorsqu'un nouvel utilisateur se register
 exports.addUser = (username, email, password, firstname, lastname, roleId) => {
   return db.user.create({ username, email, password, firstname, lastname , roleId});
@@ -19,7 +29,7 @@ exports.addUser = (username, email, password, firstname, lastname, roleId) => {
 exports.delUser = (username) => {
   return db.user.destroy({
     where: {
-      username,
+      username: username,
     },
   });
 };
