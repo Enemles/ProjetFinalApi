@@ -85,20 +85,20 @@ paths:
                   $ref: "#/components/schemas/ReviewGet"
                 example:
                   - reviewId: 1
-                    reviewTitle: Big brain
-                    movieName: Sherlock Holmes
+                    reviewtitle: Big brain
+                    moviename: Sherlock Holmes
                     rating: 2
                     comment: Le gars va trop vite, bonne réalisation
                     like: 9
                   - reviewId: 2
-                    reviewTitle: The rock en feu
-                    movieName: Jumanji
+                    reviewtitle: The rock en feu
+                    moviename: Jumanji
                     rating: 5
                     comment: Gros film pour les enfants
                     like: 3
                   - reviewId: 3
-                    reviewTitle: Princesse leïa RIP mais le boulot...
-                    movieName: Star Wars
+                    reviewtitle: Princesse leïa RIP mais le boulot...
+                    moviename: Star Wars
                     rating: 10
                     comment: ça tire dans tous les sens
                     like: 4
@@ -464,16 +464,15 @@ components:
         - reviewId
     Review:
       required:
-        - reviewTitle
-        - movieName
+        - reviewtitle
+        - moviename
         - rating
         - comment
-        - like
       properties:
-        reviewTitle:
+        reviewtitle:
           type: string
           example: I *** loved this shit
-        movieName:
+        moviename:
           type: string
           example: Star wars
         rating:
@@ -481,9 +480,6 @@ components:
         comment:
           type: string
           example: Un commentaire incroyable ehh nan c jason
-        like:
-          type: integer
-          example: 5
     Movies:
       required:
         - moviename
