@@ -44,7 +44,7 @@ module.exports = {
         // user
         res
           .status(200)  
-          .json({ token: token });
+          .json({success: true,  token: token });
       }
       res.status(400).send("Invalid Credentials");
     } catch (err) {
@@ -61,7 +61,7 @@ module.exports = {
       const oldUser = await userService.getUserByUsername(username);
 
       if (oldUser) {
-        return res.status(409).json({"error" : "User Already Exist. Please Login"});
+        return res.status(409).json({success: false, message : "User Already Exist. Please Login"});
       }
 
       encryptedPassword = await bcrypt.hash(password, 10);
@@ -77,11 +77,15 @@ module.exports = {
 
       // return new user
       res.status(201).json({
-        response: "User added successfully",
-        username: user.username,
-        email: user.email,
-        firstname: user.firstname,
-        lastname: user.lastname,
+        success: true,
+        message: {
+          data: "User added successfully",
+          username: user.username,
+          email: user.email,
+          firstname: user.firstname,
+          lastname: user.lastname,
+
+        }
       });
     } catch (err) {
       console.log(err);

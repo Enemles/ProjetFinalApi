@@ -8,16 +8,17 @@ module.exports = {
       delete user.dataValues.password;
       return user;
     });
-    res.json({ success: true, data: user });
+    res.status(200).json({ success: true, data: user });
   },
   getUserByUsername: async (req, res) => {
     const username = req.params.username;
     try {
       const user = await userService.getUserByUsername(username);
       const reviews = await reviewService.getReviewByUsername(username);
-      res.json({ success: true, header: user, data: reviews });
+      res.status(200).json({ success: true, data: user, reviews: reviews });
     } catch (error) {
       console.log(error);
+      res.status(404).json({ success: false, message: "User not found" });
     }
   },
 
@@ -30,9 +31,11 @@ module.exports = {
     try {
       const reviews = await reviewService.getReviewByUsername(currentUser);
       const user = await userService.getUserByUsername(currentUser);
-      res.json({ success: true, header: user, data: reviews });
+      res.status(200).json({ success: true, data: user, reviews: reviews });
     } catch (error) {
       console.log(error);
+      res.status(404).json({ success: false, message: "User not logged" });
+
     }
   },
 
@@ -41,7 +44,7 @@ module.exports = {
     await userService.delUser(username);
     const user = await userService.getUserByUsername(username);
     if (!user) {
-      res.json({ success: true, description: 'User has been deleted' });
+      res.status(200).json({ success: true, data: 'User has been deleted' });
     }
   },
 
@@ -54,9 +57,10 @@ module.exports = {
     console.log(infoJson);
     try {
       const user = await userService.modifyUser(currentUser, infoJson);
-      res.json({ success: true, header: user });
+      res.status(200).json({ success: true, data : user });
     } catch (error) {
       console.log(error);
+      res.status(404).json({ success: false, message : "User not logged in" });
     }
   },
 };

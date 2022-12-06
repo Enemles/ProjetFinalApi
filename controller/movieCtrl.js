@@ -4,7 +4,7 @@ const axios = require('axios');
 module.exports = {
     getMovies : async (req, res) => {
         const listMovies = await movieService.getMovies();
-        res.json({ success: true, data: listMovies });
+        res.status(200).json({ success: true, data: listMovies });
     },
     getTopRated: async (req, res) => {
         const movieOptions = {
@@ -15,11 +15,11 @@ module.exports = {
     
         const result = await axios.request(movieOptions);
         if (result) {
-            res.status(200).json(result.data);
+            res.status(200).json({success: true, data : result.data});
         } else {
             res.status(400).json({
             success: false,
-            message: 'Cannot get result',
+            data: 'Cannot get result',
             });
         }
     },
