@@ -104,28 +104,6 @@ paths:
                     like: 4
         "400":
           description: unsuccessful operation an error occurred
-    post:
-      tags:
-        - User
-      security:
-        - bearerAuth: []
-      summary: Add a new review to a movie
-      operationId: addReviewToMovie
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Review"
-        required: true
-      responses:
-        "201":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Review"
-        "400":
-          description: unsuccessful operation an error occurred
     put:
       tags:
         - User
@@ -209,7 +187,46 @@ paths:
           description: Successfull operation, user deleted
         "400":
           description: unsuccessful operation an error occurred
-  /review/{reviewId}:
+  /reviews:
+    get:
+      tags:
+        - Review
+      security:
+        - bearerAuth: []
+      summary: Find all reviews
+      operationId: getReviews
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReviewGet"
+        "404":
+          description: Reviews not found
+    post:
+      tags:
+        - Review
+      security:
+        - bearerAuth: []
+      summary: Add a new review to a movie
+      operationId: addReviewToMovie
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Review"
+        required: true
+      responses:
+        "201":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Review"
+        "400":
+          description: unsuccessful operation an error occurred
+  /reviews/{reviewId}:
     get:
       tags:
         - Review
@@ -236,7 +253,6 @@ paths:
           description: Invalid ID supplied
         "404":
           description: Review not found
-
     delete:
       tags:
         - Review
@@ -294,7 +310,7 @@ paths:
           description: Review not found
         "405":
           description: Validation exception
-  /review/{reviewId}/like:
+  /reviews/{reviewId}/like:
     put:
       tags:
         - Review
@@ -317,7 +333,7 @@ paths:
           $ref: "#/components/responses/NotFound"
         "5XX":
           $ref: "#/components/responses/InternalServerError"
-  /review/{reviewId}/dislike:
+  /reviews/{reviewId}/dislike:
     put:
       tags:
         - Review
