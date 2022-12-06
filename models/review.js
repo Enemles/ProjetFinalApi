@@ -13,10 +13,10 @@ module.exports = (instance) => {
       username: {
         type: DataTypes.STRING,
       },
-      title: {
+      reviewtitle: {
         type: DataTypes.STRING,
       },
-      note: {
+      rating: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -25,6 +25,7 @@ module.exports = (instance) => {
       },
       like: {
         type: DataTypes.INTEGER,
+        defaultValue: 0,
       },
       moviename: {
         type: DataTypes.STRING,
