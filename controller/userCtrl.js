@@ -1,19 +1,23 @@
-const userService = require("../services/user.js");
-const reviewService = require("../services/review");
+const userService = require('../services/user.js');
+const reviewService = require('../services/review');
 
 module.exports = {
   getUsers: async (req, res) => {
     const listUsers = await userService.getUsers();
-    res.json({ success: true, data: listUsers });
+    const user = listUsers.map((user) => {
+      delete user.dataValues.password;
+      return user;
+    });
+    res.json({ success: true, data: user });
   },
   getUserByUsername: async (req, res) => {
     const username = req.params.username;
     try {
-    const user = await userService.getUserByUsername(username);
-    const reviews = await reviewService.getReviewByUsername(username);
+      const user = await userService.getUserByUsername(username);
+      const reviews = await reviewService.getReviewByUsername(username);
       res.json({ success: true, header: user, data: reviews });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   },
 
@@ -25,7 +29,7 @@ module.exports = {
     }
     try {
       const reviews = await reviewService.getReviewByUsername(currentUser);
-      const user = await userService.getUserByUsername(currentUser);    
+      const user = await userService.getUserByUsername(currentUser);
       res.json({ success: true, header: user, data: reviews });
     } catch (error) {
       console.log(error);
@@ -37,7 +41,7 @@ module.exports = {
     await userService.delUser(username);
     const user = await userService.getUserByUsername(username);
     if (!user) {
-      res.json({ success: true, description: "User has been deleted" });
+      res.json({ success: true, description: 'User has been deleted' });
     }
   },
 
@@ -54,5 +58,5 @@ module.exports = {
     } catch (error) {
       console.log(error);
     }
-  }
+  },
 };
