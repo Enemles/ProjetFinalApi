@@ -18,6 +18,6 @@ router.use("/user", authMiddleware.verifyAuthentication, userRouter);
 
 router.use("/movies",authMiddleware.verifyAuthentication, movieRouter);
 
-router.use("/review", authMiddleware.verifyAuthentication, reviewRouter);
+router.use("/reviews", authMiddleware.verifyAuthentication, reviewRouter);
 
 module.exports = router;
