@@ -357,6 +357,19 @@ paths:
                 $ref: "#/components/schemas/Movies"
         "4XX":
           description: unsuccessful operation an error occurred
+  /movies/toprated:
+    get:
+      tags:
+        - Movies
+      security:
+        - bearerAuth: []
+      summary: Show all top rated movies
+      operationId: getTopRated
+      responses:
+        "201":
+          description: Top rated movies
+        "4XX":
+          description: unsuccessful operation an error occurred
 
 components:
   schemas:
