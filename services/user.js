@@ -10,15 +10,15 @@ exports.getUserByUsername = (username) => {
   return db.user.findByPk(username);
 };
 
-// //Modifie l'utilisateur actuellement connecté
-// exports.modifyUser = (username, info) => {
-//   return db.user.update(
-//       { info},
-//     {
-//       where : { info },  
-//     }
-//     )
-// };
+//Modifie l'utilisateur actuellement connecté
+exports.modifyUser = (username, info) => {
+  return db.user.update(
+    info,
+    {
+      where : { username : username },  
+    }
+    )
+};
 
 //ajoute un utilisateur à la base, appelé lorsqu'un nouvel utilisateur se register
 exports.addUser = (username, email, password, firstname, lastname, roleId) => {
