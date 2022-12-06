@@ -35,8 +35,8 @@ exports.deleteLikeOnReview = (reviewId) => {
 
 //ajoute une review en bdd, le controller doit l'assigner à une reviewId
 //et en deuxième temps cet id à un utilisateur
-exports.addReview = (title, note, comment, moviename) => {
-  return db.review.create({ title, note, comment, moviename });
+exports.addReview = (username, reviewtitle, rating, comment, moviename) => {
+  return db.review.create({ username, reviewtitle, rating, comment, moviename });
 };
 
 //supprime une review, disponible que sur le profile
