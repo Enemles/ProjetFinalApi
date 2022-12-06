@@ -1,5 +1,6 @@
 const userService = require('../services/user.js');
 const reviewService = require('../services/review');
+const bcrypt = require("bcrypt");
 
 module.exports = {
   getUsers: async (req, res) => {
@@ -51,16 +52,20 @@ module.exports = {
   modifyUser: async (req, res) => {
     const { cookies } = req;
     const currentUser = cookies.username;
-    const { firstname, email, lastname } = req.body;
-    const infoJson = { firstname, email, lastname };
-    const info = JSON.stringify(infoJson);
-    console.log(infoJson);
+    let { firstname, email, lastname, password } = req.body;
+    let infoJson = null;
     try {
-      const user = await userService.modifyUser(currentUser, infoJson);
-      res.status(200).json({ success: true, data : user });
+      if (password) {
+        password = await bcrypt.hash(password, 10);
+        infoJson = { firstname, email, lastname, password };
+      }else{
+        infoJson = { firstname, email, lastname };
+      }
+      await userService.modifyUser(currentUser, infoJson);
+      res.status(200).json({ success: true, data : infoJson });
     } catch (error) {
       console.log(error);
-      res.status(404).json({ success: false, message : "User not logged in" });
+      res.status(400).json({ success: false, message : "Error occured" });
     }
   },
 };
