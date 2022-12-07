@@ -58,9 +58,11 @@ $ npm run start
 
 &#xa0;
 
-## 🚀Postman
+## 🚀Remarques
 
-Attention aux requêtes ayant "[AUTH]" en préfixe. Il faut renseigner son bearer token dans le header sinon les requêtes ne fonctionneront pas.
+Postman : Attention aux requêtes ayant "[AUTH]" en préfixe. Il faut renseigner son bearer token dans le header sinon les requêtes ne fonctionneront pas.
+BDD : Vous devez créer une base de donée du nom de ynov en local.
+Puis vous trouverez le fichier ScriptBdd.sql qui servira à peupler la base.
 
 ## 🚀Requêtes
 
