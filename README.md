@@ -96,6 +96,25 @@ $ npm run start
     "success": true,
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlbG1lbmUiLCJpYXQiOjE2NzA0NTA4NTgsImV4cCI6MTY3MDQ1ODA1OH0.eq5PG8hxYNWjNKOTaTbhN0oFpEokSeW_HM4P-7bOq5k"
 
+### Modifier les informations d'un user
+
+`PUT /user`
+
+    "email" : "jean.dupont2022@gmail.com",
+    "firstname" : "jeanD",
+    "password" : "newpass4jean"
+
+##### Réponse :
+
+    {
+        "success": true,
+        "data": {
+            "firstname": "jeanD",
+            "email": "jean.dupont2022@gmail.com",
+            "password": "$2b$10$eSPTPJQJwKp9BoWS/Z9G.eIf8pp7VQBQYz0x4BZT0C7DuETfUaV9K"
+     }
+    }
+    
 ### Récuperer ses infos (avec son token)
 
 `GET /user`
@@ -197,5 +216,48 @@ $ npm run start
     "success": false,
     "message": "User has no permissions"
 
+### Récuperer les films les mieux notés (avec son token)
+
+`GET /movies/toprated`
+
+
+##### Réponse :
+
+    affiche la liste des films les mieux notés ( liste très longue ) 
+
+
+### Récuperer toutes les reviews (avec son token)
+
+`GET /reviews`
+
+##### Réponse :
+
+    affiche la liste de toutes les reviews
+    
+### Ecrire une review (avec son token)
+
+`POST /reviews`
+
+
+    "reviewtitle": "Un film bof bof",
+    "moviename": "Star wars",
+    "rating": 0,
+    "comment": "Vraiment j'ai pas du tout aimé"
+
+### Ajouter un like à une review (avec son token)
+
+`POST /reviews/5/like`
+
+### Ajouter un dislike à une review (avec son token)
+
+`POST /reviews/5/dislike`
+
+### Supprimer une review avec son id (avec le token admin)
+
+`GET /reviews/5`
+
+### Récuperer une review avec son id (avec le token admin)
+
+`GET /reviews/5`
 
 <a href="#top">Back to top</a>
