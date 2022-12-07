@@ -39,9 +39,9 @@
 Les techno suivantes ont été utilisé pour cette api :
 
 - [Node.js](https://nodejs.org/en/)
-- [Express](https://pt-br.reactjs.org/)
-- [Sequelize](https://reactnative.dev/)
-- [OpenApi](https://www.typescriptlang.org/)
+- [Express](https://expressjs.com/fr/)
+- [Sequelize](https://sequelize.org/)
+- [OpenApi](https://www.openapis.org/)
 
 ## 🏁 Start ##
 
@@ -58,11 +58,15 @@ $ npm run start
 
 &#xa0;
 
+## 🚀Postman
+
+Attention aux requêtes ayant "[AUTH]" en préfixe. Il faut renseigner son bearer token dans le header sinon les requêtes ne fonctionneront pas.
+
 ## 🚀Requêtes
 
 ### Créer un user
 
-`GET /login/register`
+`POST /login/register`
 
 
     "username" : "jean",
@@ -86,7 +90,7 @@ $ npm run start
 
 ### Se connecter
 
-`GET /login`
+`POST /login`
 
     "username" : "jean",
     "password": "pass4jean"
