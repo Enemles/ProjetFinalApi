@@ -252,11 +252,11 @@ $ npm run start
 
 `POST /reviews/5/dislike`
 
-### Supprimer une review avec son id (avec le token admin)
+### Supprimer une review avec son id (avec le token l'admin)
 
 `GET /reviews/5`
 
-### Récuperer une review avec son id (avec le token admin)
+### Récuperer une review avec son id (avec le token l'admin)
 
 `GET /reviews/5`
 
