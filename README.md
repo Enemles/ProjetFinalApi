@@ -58,7 +58,7 @@ $ npm run start
 
 &#xa0;
 
-## 🚀Requêtes
+## 🚀Requêtes POSTMAN
 
 ### Créer un user
 
@@ -248,16 +248,32 @@ $ npm run start
 
 `POST /reviews/5/like`
 
+##### Réponse :
+
+    "success": "true",
+    "description": "Like added"
+
 ### Ajouter un dislike à une review (avec son token)
 
 `POST /reviews/5/dislike`
 
+##### Réponse :
+
+    "success": "true",
+    "description": "Dislike added"
+
 ### Supprimer une review avec son id (avec le token l'admin)
+
+    "success": "true",
+    "description": "Review has been deleted"
 
 `GET /reviews/5`
 
 ### Récuperer une review avec son id (avec le token l'admin)
 
-`GET /reviews/5`
+    "reviewtitle": "Un incroyable",
+    "moviename": "Tchoupi",
+    "rating": 10,
+    "comment": "J'ai adoré du début à la fin !!"
 
 <a href="#top">Back to top</a>
