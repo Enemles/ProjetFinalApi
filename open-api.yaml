@@ -85,45 +85,23 @@ paths:
                   $ref: "#/components/schemas/ReviewGet"
                 example:
                   - reviewId: 1
-                    reviewTitle: Big brain
-                    movieName: Sherlock Holmes
+                    reviewtitle: Big brain
+                    moviename: Sherlock Holmes
                     rating: 2
                     comment: Le gars va trop vite, bonne réalisation
                     like: 9
                   - reviewId: 2
-                    reviewTitle: The rock en feu
-                    movieName: Jumanji
+                    reviewtitle: The rock en feu
+                    moviename: Jumanji
                     rating: 5
                     comment: Gros film pour les enfants
                     like: 3
                   - reviewId: 3
-                    reviewTitle: Princesse leïa RIP mais le boulot...
-                    movieName: Star Wars
+                    reviewtitle: Princesse leïa RIP mais le boulot...
+                    moviename: Star Wars
                     rating: 10
                     comment: ça tire dans tous les sens
                     like: 4
-        "400":
-          description: unsuccessful operation an error occurred
-    post:
-      tags:
-        - User
-      security:
-        - bearerAuth: []
-      summary: Add a new review to a movie
-      operationId: addReviewToMovie
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Review"
-        required: true
-      responses:
-        "201":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Review"
         "400":
           description: unsuccessful operation an error occurred
     put:
@@ -137,15 +115,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/User"
-        required: true
+              $ref: "#/components/schemas/UserPut"
       responses:
         "201":
           description: Successfull operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: "#/components/schemas/UserPut"
         "400":
           description: unsuccessful operation an error occurred
   /user/all:
@@ -210,7 +187,46 @@ paths:
           description: Successfull operation, user deleted
         "400":
           description: unsuccessful operation an error occurred
-  /review/{reviewId}:
+  /reviews:
+    get:
+      tags:
+        - Review
+      security:
+        - bearerAuth: []
+      summary: Find all reviews
+      operationId: getReviews
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReviewGet"
+        "404":
+          description: Reviews not found
+    post:
+      tags:
+        - Review
+      security:
+        - bearerAuth: []
+      summary: Add a new review to a movie
+      operationId: addReviewToMovie
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Review"
+        required: true
+      responses:
+        "201":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Review"
+        "400":
+          description: unsuccessful operation an error occurred
+  /reviews/{reviewId}:
     get:
       tags:
         - Review
@@ -237,7 +253,6 @@ paths:
           description: Invalid ID supplied
         "404":
           description: Review not found
-
     delete:
       tags:
         - Review
@@ -295,7 +310,7 @@ paths:
           description: Review not found
         "405":
           description: Validation exception
-  /review/{reviewId}/like:
+  /reviews/{reviewId}/like:
     put:
       tags:
         - Review
@@ -318,7 +333,7 @@ paths:
           $ref: "#/components/responses/NotFound"
         "5XX":
           $ref: "#/components/responses/InternalServerError"
-  /review/{reviewId}/dislike:
+  /reviews/{reviewId}/dislike:
     put:
       tags:
         - Review
@@ -358,21 +373,34 @@ paths:
                 $ref: "#/components/schemas/Movies"
         "4XX":
           description: unsuccessful operation an error occurred
+  /movies/toprated:
+    get:
+      tags:
+        - Movies
+      security:
+        - bearerAuth: []
+      summary: Show all top rated movies
+      operationId: getTopRated
+      responses:
+        "201":
+          description: Top rated movies
+        "4XX":
+          description: unsuccessful operation an error occurred
 
 components:
   schemas:
     User:
       required:
-        - userName
-        - mail
+        - username
+        - email
         - firstname
         - lastname
       type: object
       properties:
-        userName:
+        username:
           type: string
           example: JasonDerulo98
-        mail:
+        email:
           type: string
           example: jasonderulo@gmail.com
         firstname:
@@ -393,11 +421,11 @@ components:
           example: jasonLeGazon
     UserLogin:
       required:
-        - userName
+        - username
         - password
       type: object
       properties:
-        userName:
+        username:
           type: string
           example: JasonDerulo98
         password:
@@ -413,6 +441,18 @@ components:
         token:
           type: string
           example: jeSuisUnToken
+    UserPut:
+      type: object
+      properties:
+        email:
+          type: string
+          example: JasonDerulo@hotmail.com
+        firstname:
+          type: string
+          example: jasonLe
+        lastname:
+          type: string
+          example: Gazon
     ReviewGet:
       allOf:
         - properties:
@@ -424,16 +464,15 @@ components:
         - reviewId
     Review:
       required:
-        - reviewTitle
-        - movieName
+        - reviewtitle
+        - moviename
         - rating
         - comment
-        - like
       properties:
-        reviewTitle:
+        reviewtitle:
           type: string
           example: I *** loved this shit
-        movieName:
+        moviename:
           type: string
           example: Star wars
         rating:
@@ -441,9 +480,6 @@ components:
         comment:
           type: string
           example: Un commentaire incroyable ehh nan c jason
-        like:
-          type: integer
-          example: 5
     Movies:
       required:
         - moviename

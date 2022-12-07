@@ -1,11 +1,15 @@
+const apicache = require('apicache');
 const express = require("express");
 const router = express.Router();
 const userCtrl = require("../controller/userCtrl");
 const authMiddleware = require("../middleware/auth");
 
-router.get("/", userCtrl.getCurrentUser());
-router.get("/all", userCtrl.getUsers());
-router.get("/:userId", userCtrl.getUserByUsername());
-router.delete("/:user", authMiddleware.verifyAdmin(), userCtrl.delUser());
+let cache = apicache.middleware
+
+router.get("/", cache('5 minutes'), userCtrl.getCurrentUser);
+router.put("/", userCtrl.modifyUser);
+router.get("/all", userCtrl.getUsers);
+router.get("/:username", userCtrl.getUserByUsername);
+router.delete("/:username", authMiddleware.verifyAdmin, userCtrl.delUser);
 
 module.exports = router;

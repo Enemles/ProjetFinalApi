@@ -1,15 +1,12 @@
+const apicache = require('apicache');
 const express = require("express");
 router = express.Router();
 movieCtrl = require("../controller/movieCtrl");
-authMidd = require("../middleware/auth");
-const cache = require("apicache").middleware;
+
+
+let cache = apicache.middleware;
 
 router.get("/", movieCtrl.getMovies);
-router.get(
-  "/toprated",
-  authMidd.verifyAdmin,
-  cache("20 minutes"),
-  movieCtrl.getTopRated
-);
+router.get("/toprated", cache("20 minutes"), movieCtrl.getTopRated);
 
 module.exports = router;

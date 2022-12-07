@@ -8,15 +8,15 @@ module.exports = (instance) => {
       reviewId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoincrement: true,
+        autoIncrement: true,
       },
       username: {
         type: DataTypes.STRING,
       },
-      title: {
+      reviewtitle: {
         type: DataTypes.STRING,
       },
-      note: {
+      rating: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -25,6 +25,7 @@ module.exports = (instance) => {
       },
       like: {
         type: DataTypes.INTEGER,
+        defaultValue: 0,
       },
       moviename: {
         type: DataTypes.STRING,
