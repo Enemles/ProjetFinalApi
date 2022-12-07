@@ -1,5 +1,5 @@
-const userService = require('../services/user.js');
-const reviewService = require('../services/review');
+const userService = require("../services/user.js");
+const reviewService = require("../services/review");
 const bcrypt = require("bcrypt");
 
 module.exports = {
@@ -9,7 +9,7 @@ module.exports = {
       delete user.dataValues.password;
       return user;
     });
-    res.status(200).json({ success: true, data: user });
+    return res.status(200).json({ success: true, data: user.dataValues });
   },
   getUserByUsername: async (req, res) => {
     const username = req.params.username;
@@ -36,8 +36,11 @@ module.exports = {
     } catch (error) {
       console.log(error);
       res.status(404).json({ success: false, message: "User not logged" });
-
     }
+    res.status(400).json({
+      success: false,
+      header: "Seems to have a problem with the current user",
+    });
   },
 
   delUser: async (req, res) => {
@@ -45,7 +48,7 @@ module.exports = {
     await userService.delUser(username);
     const user = await userService.getUserByUsername(username);
     if (!user) {
-      res.status(200).json({ success: true, data: 'User has been deleted' });
+      res.status(200).json({ success: true, data: "User has been deleted" });
     }
   },
 
@@ -58,14 +61,14 @@ module.exports = {
       if (password) {
         password = await bcrypt.hash(password, 10);
         infoJson = { firstname, email, lastname, password };
-      }else{
+      } else {
         infoJson = { firstname, email, lastname };
       }
       await userService.modifyUser(currentUser, infoJson);
-      res.status(200).json({ success: true, data : infoJson });
+      res.status(200).json({ success: true, data: infoJson });
     } catch (error) {
       console.log(error);
-      res.status(400).json({ success: false, message : "Error occured" });
+      res.status(400).json({ success: false, message: "Error occured" });
     }
   },
 };
