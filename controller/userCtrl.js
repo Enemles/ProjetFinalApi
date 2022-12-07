@@ -29,12 +29,6 @@ module.exports = {
     if (!currentUser) {
       throw new error("Problème de mise en cache de l'utilisateur");
     }
-<<<<<<< HEAD
-    const user = userService.getUserByUsername(currentUser);
-    const reviews = reviewService.getReviewByUsername(currentUser);
-    if (user && user.length === 1) {
-      res.status(201).json({ success: true, header: user, data: reviews });
-=======
     try {
       const reviews = await reviewService.getReviewByUsername(currentUser);
       const user = await userService.getUserByUsername(currentUser);
@@ -43,7 +37,6 @@ module.exports = {
       console.log(error);
       res.status(404).json({ success: false, message: "User not logged" });
 
->>>>>>> master
     }
     res.status(400).json({
       success: false,

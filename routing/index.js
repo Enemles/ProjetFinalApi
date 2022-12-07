@@ -3,11 +3,7 @@ router = express.Router();
 
 const userRouter = require("./userRouter");
 const authenticationRouter = require("./authenticationRouter");
-<<<<<<< HEAD
-const movieRouter = require("./movieRouter");
-=======
 const movieRouter = require('./movieRouter');
->>>>>>> master
 const reviewRouter = require("./reviewRouter");
 
 const authMiddleware = require("../middleware/auth");
