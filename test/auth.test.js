@@ -1,34 +1,39 @@
 const request = require("supertest");
 const app = require("../app");
+const userService = require("../services/user");
 
 describe("register tests", () => {
   it("should return the new user created", async () => {
-    const resp = await request(app).post("/login/register");
+    const resp = await request(app).post("/login/register").send({
+      username: "pepeJC",
+      email: "admin@gmail.com",
+      firstname: "Papa jacob",
+      lastname: "pipou",
+      password: "papaJCpass",
+    });
     expect(resp.statusCode).toEqual(201);
     expect(resp.body).not.toBeNull();
-    expect(resp.body).toHaveProperty("response");
-    expect(resp.body).toHaveProperty("username");
-    expect(resp.body).toHaveProperty("email");
-    expect(resp.body).toHaveProperty("firstname");
-    expect(resp.body).toHaveProperty("lastname");
-    expect(resp.body.succes).toBeTruthy();
+    expect(resp.body.success).toBeTruthy();
+    userService.delUser("pepeJC");
   });
 
-  it("should fail if all user aren't present ", async () => {
+  it("should fail if all user parameter aren't present ", async () => {
     const resp = await request(app).post("/login/register").send({
       username: "papaJC",
-      mail: "admin@gmail.com",
+      email: "papaJC12@gmail.com",
       firstname: "Papa jacob",
     });
     expect(resp.statusCode).toEqual(400);
-    expect(resp.body.succes).toBeFalsy();
+    expect(resp.body.success).toBeFalsy();
   });
 
   it("should fail if user already exist", async () => {
     const resp = await request(app).post("/login/register").send({
       username: "admin",
-      mail: "admin@gmail.com",
-      firstname: "Papa jacob",
+      email: "admin@gmail.com",
+      firstname: "admin",
+      lastname: "admin",
+      password: "ablabla",
     });
     expect(resp.statusCode).toEqual(409);
     expect(resp.body.succes).toBeFalsy();
